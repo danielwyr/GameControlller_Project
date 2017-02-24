@@ -78,8 +78,8 @@ src/main.o: ../src/main.cpp ../include/global.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_mmc.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_flash_ex.h \
- ../system/include/BSP/stm32f769i_discovery.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_gpio.h \
+ ../system/include/BSP/stm32f769i_discovery.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_i2c.h \
  ../system/include/BSP/stm32f769i_discovery_lcd.h \
  ../system/include/BSP/../Components/otm8009a/otm8009a.h \
@@ -256,9 +256,9 @@ src/main.o: ../src/main.cpp ../include/global.h \
 
 ../system/include/stm32f7xx/stm32f7xx_hal_flash_ex.h:
 
-../system/include/BSP/stm32f769i_discovery.h:
-
 ../system/include/stm32f7xx/stm32f7xx_hal_gpio.h:
+
+../system/include/BSP/stm32f769i_discovery.h:
 
 ../system/include/stm32f7xx/stm32f7xx_hal_i2c.h:
 

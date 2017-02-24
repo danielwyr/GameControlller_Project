@@ -1,16 +1,23 @@
-
 #include "global.h"
+
+
 
 int main(void) {
 
-	CPU_CACHE_Enable();
-	HAL_Init();
-	SystemClock_Config();
+	system_init();
 	LCD_Config();
-
-	return 0;
+	LCD_Texture_config();
+	GPIO_Config();
+	while(1) {
+		get_track_pad_state();
+		Gesture_demo();
+	}
 }
 
+void LCD_Texture_config(void) {
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetFont(&Font24);
+}
 
 void LCD_Config(void) {
 	/* LCD Initialization */
@@ -30,6 +37,76 @@ void LCD_Config(void) {
 
 	/* Configure the transparency for background */
 	//BSP_LCD_SetTransparency(0, 100);
+}
+
+void GPIO_init(GPIO_TypeDef* gpio_bus, GPIO_InitTypeDef* gpio_typeDef, uint32_t PIN) {
+	gpio_typeDef->Pin = PIN;
+	gpio_typeDef->Pull = GPIO_PULLDOWN;
+	//gpio_typeDef->Mode = GPIO_MODE_INPUT;
+	//gpio_typeDef->Speed = GPIO_SPEED_HIGH;
+	//gpio_typeDef->Alternate = GPIO_AF2_TIM3;
+	HAL_GPIO_Init(gpio_bus, gpio_typeDef);
+}
+
+void GPIO_Config(void) {
+
+	GPIO_init(GPIOC, &d0_init, GPIO_PIN_7);
+	GPIO_init(GPIOC, &d1_init, GPIO_PIN_6);
+	GPIO_init(GPIOJ, &d2_init, GPIO_PIN_1);
+	GPIO_init(GPIOF, &d3_init, GPIO_PIN_6);
+	GPIO_init(GPIOJ, &d4_init, GPIO_PIN_0);
+}
+
+
+void get_track_pad_state(void)
+{
+	track_pad_state.up = (HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_7) == GPIO_PIN_SET);
+	track_pad_state.down = (HAL_GPIO_ReadPin(GPIOJ, GPIO_PIN_1) == GPIO_PIN_SET);
+	track_pad_state.left = (HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_6) == GPIO_PIN_SET);
+	track_pad_state.right = (HAL_GPIO_ReadPin(GPIOJ, GPIO_PIN_0) == GPIO_PIN_SET);
+	track_pad_state.tap = (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == GPIO_PIN_SET);
+}
+
+void Gesture_demo(void)
+{
+	//const uint16_t x = 240, y = 0;
+	/*
+	if (track_pad_state.up && track_pad_state.left) {
+		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "UP LEFT", LEFT_MODE);
+	} else if (track_pad_state.up && track_pad_state.right) {
+		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "UP RIGHT", LEFT_MODE);
+	} else if (track_pad_state.down && track_pad_state.left) {
+		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "DOWN LEFT", LEFT_MODE);
+	} else if (track_pad_state.down && track_pad_state.right) {
+		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "DOWN RIGHT", LEFT_MODE);
+	} else */
+	//BSP_LCD_ClearStringLine(0);
+	if (track_pad_state.up) {
+		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "UP", LEFT_MODE);
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "UP");
+	} else if (track_pad_state.down) {
+		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "DOWN", LEFT_MODE);
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "DOWN");
+	} else if (track_pad_state.left) {
+		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "LEFT", LEFT_MODE);
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "LEFT");
+	} else if (track_pad_state.right) {
+		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "RIGHT", LEFT_MODE);
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "RIGHT");
+	} else if(track_pad_state.tap) {
+		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "TAP", LEFT_MODE);
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "TAP");
+	} else {
+		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "NOT TOUCHED", LEFT_MODE);
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "NOT TOUCHED");
+	}
+}
+
+
+void system_init(void) {
+	CPU_CACHE_Enable();
+	HAL_Init();
+	SystemClock_Config();
 }
 
 void SystemClock_Config(void)
@@ -93,3 +170,4 @@ void Error_Handler(void)
     {
     }
 }
+
