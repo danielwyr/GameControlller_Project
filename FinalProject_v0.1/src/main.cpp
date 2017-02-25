@@ -1,16 +1,16 @@
 #include "global.h"
 
 
-
 int main(void) {
-
 	system_init();
 	LCD_Config();
 	LCD_Texture_config();
 	GPIO_Config();
+
+	Cursor crs((int16_t) BSP_LCD_GetXSize() / 2, (int16_t)  BSP_LCD_GetYSize() / 2, RADIUS);
 	while(1) {
 		get_track_pad_state();
-		Gesture_demo();
+		Gesture_demo(crs);
 	}
 }
 
@@ -33,7 +33,7 @@ void LCD_Config(void) {
 	BSP_LCD_SelectLayer(0);
 
 	/* Clear the Background Layer */
-	BSP_LCD_Clear(LCD_COLOR_CYAN);
+	BSP_LCD_Clear(BACK_COLOR);
 
 	/* Configure the transparency for background */
 	//BSP_LCD_SetTransparency(0, 100);
@@ -42,16 +42,15 @@ void LCD_Config(void) {
 void GPIO_init(GPIO_TypeDef* gpio_bus, GPIO_InitTypeDef* gpio_typeDef, uint32_t PIN) {
 	gpio_typeDef->Pin = PIN;
 	gpio_typeDef->Pull = GPIO_PULLDOWN;
-	//gpio_typeDef->Mode = GPIO_MODE_INPUT;
+	gpio_typeDef->Mode = GPIO_MODE_INPUT;
 	//gpio_typeDef->Speed = GPIO_SPEED_HIGH;
 	//gpio_typeDef->Alternate = GPIO_AF2_TIM3;
 	HAL_GPIO_Init(gpio_bus, gpio_typeDef);
 }
 
 void GPIO_Config(void) {
-
-	GPIO_init(GPIOC, &d0_init, GPIO_PIN_7);
-	GPIO_init(GPIOC, &d1_init, GPIO_PIN_6);
+	GPIO_init(GPIOF, &d0_init, GPIO_PIN_7);
+	GPIO_init(GPIOJ, &d1_init, GPIO_PIN_4);
 	GPIO_init(GPIOJ, &d2_init, GPIO_PIN_1);
 	GPIO_init(GPIOF, &d3_init, GPIO_PIN_6);
 	GPIO_init(GPIOJ, &d4_init, GPIO_PIN_0);
@@ -64,44 +63,32 @@ void get_track_pad_state(void)
 	track_pad_state.down = (HAL_GPIO_ReadPin(GPIOJ, GPIO_PIN_1) == GPIO_PIN_SET);
 	track_pad_state.left = (HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_6) == GPIO_PIN_SET);
 	track_pad_state.right = (HAL_GPIO_ReadPin(GPIOJ, GPIO_PIN_0) == GPIO_PIN_SET);
-	track_pad_state.tap = (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == GPIO_PIN_SET);
+	track_pad_state.tap = (HAL_GPIO_ReadPin(GPIOJ, GPIO_PIN_4) == GPIO_PIN_SET);
 }
 
-void Gesture_demo(void)
-{
-	//const uint16_t x = 240, y = 0;
-	/*
-	if (track_pad_state.up && track_pad_state.left) {
-		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "UP LEFT", LEFT_MODE);
-	} else if (track_pad_state.up && track_pad_state.right) {
-		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "UP RIGHT", LEFT_MODE);
-	} else if (track_pad_state.down && track_pad_state.left) {
-		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "DOWN LEFT", LEFT_MODE);
-	} else if (track_pad_state.down && track_pad_state.right) {
-		BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "DOWN RIGHT", LEFT_MODE);
-	} else */
-	//BSP_LCD_ClearStringLine(0);
+
+
+void Gesture_demo(Cursor& crs) {
 	if (track_pad_state.up) {
-		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "UP", LEFT_MODE);
-		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "UP");
+		crs.moveUp();
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "    UP     ");
 	} else if (track_pad_state.down) {
-		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "DOWN", LEFT_MODE);
-		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "DOWN");
+		crs.moveDown();
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "   DOWN    ");
 	} else if (track_pad_state.left) {
-		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "LEFT", LEFT_MODE);
-		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "LEFT");
+		crs.moveLeft();
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "   LEFT    ");
 	} else if (track_pad_state.right) {
-		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "RIGHT", LEFT_MODE);
-		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "RIGHT");
+		crs.moveRight();
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "   RIGHT   ");
 	} else if(track_pad_state.tap) {
-		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "TAP", LEFT_MODE);
-		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "TAP");
+		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "    TAP    ");
 	} else {
-		//BSP_LCD_DisplayStringAt(x, y, (uint8_t *) "NOT TOUCHED", LEFT_MODE);
 		BSP_LCD_DisplayStringAtLine(0, (uint8_t *) "NOT TOUCHED");
 	}
 }
 
+/* -- System Configuration Functions -- */
 
 void system_init(void) {
 	CPU_CACHE_Enable();
@@ -170,4 +157,59 @@ void Error_Handler(void)
     {
     }
 }
+
+/* -- Cursor Class Functions-- */
+Cursor::Cursor(const int16_t x, const int16_t y, const uint16_t rad) : x_(x), y_(y), rad_(rad) {
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillCircle(x, y, rad * 2);
+}
+
+void Cursor::CopyFrom(const Cursor &copy) {
+	x_ = copy.x_;
+	y_ = copy.y_;
+	rad_ = copy.rad_;
+}
+
+void Cursor::SetLocation(const int16_t x, const int16_t y) {
+	if((x > BSP_LCD_GetXSize() - rad_ * 2) || (y > BSP_LCD_GetYSize() - rad_ * 2) || (x < rad_ * 2) || (y < rad_ * 2)) return ;
+	BSP_LCD_SetTextColor(BACK_COLOR);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, rad_ * 2);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillCircle((uint16_t) x, (uint16_t) x, rad_ * 2);
+	x_ = x;
+	y_ = y;
+}
+
+void Cursor::moveUp(void) {
+	BSP_LCD_SetTextColor(BACK_COLOR);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, RADIUS * 2);
+	if(y_ > RADIUS * 2) y_--;
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, RADIUS * 2);
+}
+
+void Cursor::moveDown(void) {
+	BSP_LCD_SetTextColor(BACK_COLOR);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, RADIUS * 2);
+	if((uint16_t) y_ < BSP_LCD_GetYSize() - RADIUS * 2) y_++;
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, 20);
+}
+
+void Cursor::moveLeft(void) {
+	BSP_LCD_SetTextColor(BACK_COLOR);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, RADIUS * 2);
+	if(x_ > RADIUS * 2) x_--;
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, 20);
+}
+
+void Cursor::moveRight(void) {
+	BSP_LCD_SetTextColor(BACK_COLOR);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, RADIUS * 2);
+	if((uint16_t) x_ < BSP_LCD_GetXSize() - RADIUS * 2) x_++;
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, 20);
+}
+
 

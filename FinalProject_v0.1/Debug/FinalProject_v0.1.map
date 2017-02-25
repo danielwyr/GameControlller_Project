@@ -21964,8 +21964,6 @@ Discarded input sections
                 0x0000000000000000       0x1c ./system/src/BSP/stm32f769i_discovery_lcd.o
  .text.BSP_LCD_ReadPixel
                 0x0000000000000000       0x94 ./system/src/BSP/stm32f769i_discovery_lcd.o
- .text.BSP_LCD_DrawHLine
-                0x0000000000000000       0x54 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .text.BSP_LCD_DrawVLine
                 0x0000000000000000       0x54 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .text.BSP_LCD_DrawRect
@@ -21992,10 +21990,6 @@ Discarded input sections
                 0x0000000000000000       0xf0 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .text.BSP_LCD_FillPolygon
                 0x0000000000000000      0x120 ./system/src/BSP/stm32f769i_discovery_lcd.o
- .text.BSP_LCD_DrawCircle
-                0x0000000000000000      0x12c ./system/src/BSP/stm32f769i_discovery_lcd.o
- .text.BSP_LCD_FillCircle
-                0x0000000000000000       0xd0 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .text.BSP_LCD_DrawEllipse
                 0x0000000000000000      0x108 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .rodata.Font16_Table
@@ -24205,11 +24199,16 @@ Discarded input sections
  .group         0x0000000000000000        0x8 ./src/main.o
  .group         0x0000000000000000        0x8 ./src/main.o
  .group         0x0000000000000000        0x8 ./src/main.o
+ .group         0x0000000000000000        0x8 ./src/main.o
  .text          0x0000000000000000        0x0 ./src/main.o
  .data          0x0000000000000000        0x0 ./src/main.o
  .bss           0x0000000000000000        0x0 ./src/main.o
  .text._Z13Error_Handlerv
                 0x0000000000000000        0xc ./src/main.o
+ .text._ZN6Cursor8CopyFromERKS_
+                0x0000000000000000       0x14 ./src/main.o
+ .text._ZN6Cursor11SetLocationEss
+                0x0000000000000000       0x74 ./src/main.o
  .debug_macro   0x0000000000000000      0x922 ./src/main.o
  .debug_macro   0x0000000000000000      0x294 ./src/main.o
  .debug_macro   0x0000000000000000       0x2e ./src/main.o
@@ -24592,10 +24591,10 @@ END GROUP
 
 .inits          0x000000000800040c       0x28
                 0x000000000800040c                __data_regions_array_start = .
-                0x000000000800040c        0x4 LONG 0x800656c LOADADDR (.data)
+                0x000000000800040c        0x4 LONG 0x8006928 LOADADDR (.data)
                 0x0000000008000410        0x4 LONG 0x20000000 ADDR (.data)
                 0x0000000008000414        0x4 LONG 0x2000008c (ADDR (.data) + SIZEOF (.data))
-                0x0000000008000418        0x4 LONG 0x800656c LOADADDR (.data_CCMRAM)
+                0x0000000008000418        0x4 LONG 0x8006928 LOADADDR (.data_CCMRAM)
                 0x000000000800041c        0x4 LONG 0x10000000 ADDR (.data_CCMRAM)
                 0x0000000008000420        0x4 LONG 0x10000000 (ADDR (.data_CCMRAM) + SIZEOF (.data_CCMRAM))
                 0x0000000008000424                __data_regions_array_end = .
@@ -24627,7 +24626,7 @@ END GROUP
 .flashtext
  *(.flashtext .flashtext.*)
 
-.text           0x0000000008000440     0x612b
+.text           0x0000000008000440     0x64e7
  *(.text .text.*)
  .text.HAL_Init
                 0x0000000008000440       0x24 ./system/src/stm32f7xx/stm32f7xx_hal.o
@@ -24959,477 +24958,502 @@ END GROUP
  .text.BSP_LCD_Clear
                 0x0000000008002ed0       0x3c ./system/src/BSP/stm32f769i_discovery_lcd.o
                 0x0000000008002ed0                BSP_LCD_Clear
+ .text.BSP_LCD_DrawHLine
+                0x0000000008002f0c       0x54 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008002f0c                BSP_LCD_DrawHLine
  .text.BSP_LCD_DisplayOn
-                0x0000000008002f0c       0x24 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x0000000008002f0c                BSP_LCD_DisplayOn
+                0x0000000008002f60       0x24 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008002f60                BSP_LCD_DisplayOn
  .text.DSI_IO_WriteCmd
-                0x0000000008002f30       0x38 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x0000000008002f30                DSI_IO_WriteCmd
+                0x0000000008002f84       0x38 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008002f84                DSI_IO_WriteCmd
  .text.BSP_LCD_MspInit
-                0x0000000008002f68       0xa8 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x0000000008002f68                BSP_LCD_MspInit
+                0x0000000008002fbc       0xa8 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008002fbc                BSP_LCD_MspInit
  .text.BSP_LCD_InitEx
-                0x0000000008003010      0x1a0 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x0000000008003010                BSP_LCD_InitEx
+                0x0000000008003064      0x1a0 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008003064                BSP_LCD_InitEx
  .text.BSP_LCD_Init
-                0x00000000080031b0        0xc ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x00000000080031b0                BSP_LCD_Init
+                0x0000000008003204        0xc ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008003204                BSP_LCD_Init
  .text.BSP_LCD_DrawPixel
-                0x00000000080031bc       0x2c ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x00000000080031bc                BSP_LCD_DrawPixel
+                0x0000000008003210       0x2c ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008003210                BSP_LCD_DrawPixel
  .text.DrawChar
-                0x00000000080031e8       0xe0 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x000000000800323c       0xe0 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .text.BSP_LCD_DisplayChar
-                0x00000000080032c8       0x34 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x00000000080032c8                BSP_LCD_DisplayChar
+                0x000000000800331c       0x34 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x000000000800331c                BSP_LCD_DisplayChar
  .text.BSP_LCD_DisplayStringAt
-                0x00000000080032fc       0xd0 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x00000000080032fc                BSP_LCD_DisplayStringAt
+                0x0000000008003350       0xd0 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008003350                BSP_LCD_DisplayStringAt
  .text.BSP_LCD_DisplayStringAtLine
-                0x00000000080033cc       0x20 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x00000000080033cc                BSP_LCD_DisplayStringAtLine
+                0x0000000008003420       0x20 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008003420                BSP_LCD_DisplayStringAtLine
+ .text.BSP_LCD_DrawCircle
+                0x0000000008003440      0x12c ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008003440                BSP_LCD_DrawCircle
+ .text.BSP_LCD_FillCircle
+                0x000000000800356c       0xd0 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x000000000800356c                BSP_LCD_FillCircle
  .text.BSP_SDRAM_Initialization_sequence
-                0x00000000080033ec       0x9c ./system/src/BSP/stm32f769i_discovery_sdram.o
-                0x00000000080033ec                BSP_SDRAM_Initialization_sequence
+                0x000000000800363c       0x9c ./system/src/BSP/stm32f769i_discovery_sdram.o
+                0x000000000800363c                BSP_SDRAM_Initialization_sequence
  .text.BSP_SDRAM_MspInit
-                0x0000000008003488      0x180 ./system/src/BSP/stm32f769i_discovery_sdram.o
-                0x0000000008003488                BSP_SDRAM_MspInit
+                0x00000000080036d8      0x180 ./system/src/BSP/stm32f769i_discovery_sdram.o
+                0x00000000080036d8                BSP_SDRAM_MspInit
  .text.BSP_SDRAM_Init
-                0x0000000008003608       0x80 ./system/src/BSP/stm32f769i_discovery_sdram.o
-                0x0000000008003608                BSP_SDRAM_Init
+                0x0000000008003858       0x80 ./system/src/BSP/stm32f769i_discovery_sdram.o
+                0x0000000008003858                BSP_SDRAM_Init
  .text.OTM8009A_Init
-                0x0000000008003688      0x4a4 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008003688                OTM8009A_Init
+                0x00000000080038d8      0x4a4 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080038d8                OTM8009A_Init
  .text._Z18LCD_Texture_configv
-                0x0000000008003b2c       0x18 ./src/main.o
-                0x0000000008003b2c                LCD_Texture_config()
+                0x0000000008003d7c       0x18 ./src/main.o
+                0x0000000008003d7c                LCD_Texture_config()
  .text._Z10LCD_Configv
-                0x0000000008003b44       0x24 ./src/main.o
-                0x0000000008003b44                LCD_Config()
+                0x0000000008003d94       0x24 ./src/main.o
+                0x0000000008003d94                LCD_Config()
  .text._Z9GPIO_initP12GPIO_TypeDefP16GPIO_InitTypeDefm
-                0x0000000008003b68       0x10 ./src/main.o
-                0x0000000008003b68                GPIO_init(GPIO_TypeDef*, GPIO_InitTypeDef*, unsigned long)
+                0x0000000008003db8       0x14 ./src/main.o
+                0x0000000008003db8                GPIO_init(GPIO_TypeDef*, GPIO_InitTypeDef*, unsigned long)
  .text._Z11GPIO_Configv
-                0x0000000008003b78       0x58 ./src/main.o
-                0x0000000008003b78                GPIO_Config()
+                0x0000000008003dcc       0x58 ./src/main.o
+                0x0000000008003dcc                GPIO_Config()
  .text._Z19get_track_pad_statev
-                0x0000000008003bd0       0x78 ./src/main.o
-                0x0000000008003bd0                get_track_pad_state()
- .text._Z12Gesture_demov
-                0x0000000008003c48       0x78 ./src/main.o
-                0x0000000008003c48                Gesture_demo()
+                0x0000000008003e24       0x70 ./src/main.o
+                0x0000000008003e24                get_track_pad_state()
  .text._Z18SystemClock_Configv
-                0x0000000008003cc0       0x64 ./src/main.o
-                0x0000000008003cc0                SystemClock_Config()
+                0x0000000008003e94       0x64 ./src/main.o
+                0x0000000008003e94                SystemClock_Config()
  .text._Z16CPU_CACHE_Enablev
-                0x0000000008003d24       0x78 ./src/main.o
-                0x0000000008003d24                CPU_CACHE_Enable()
+                0x0000000008003ef8       0x78 ./src/main.o
+                0x0000000008003ef8                CPU_CACHE_Enable()
  .text._Z11system_initv
-                0x0000000008003d9c       0x10 ./src/main.o
-                0x0000000008003d9c                system_init()
- .text.main     0x0000000008003dac       0x1c ./src/main.o
-                0x0000000008003dac                main
- .text.__errno  0x0000000008003dc8        0xc /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-errno.o)
-                0x0000000008003dc8                __errno
+                0x0000000008003f70       0x10 ./src/main.o
+                0x0000000008003f70                system_init()
+ .text._ZN6CursorC2Esst
+                0x0000000008003f80       0x28 ./src/main.o
+                0x0000000008003f80                Cursor::Cursor(short, short, unsigned short)
+                0x0000000008003f80                Cursor::Cursor(short, short, unsigned short)
+ .text._ZN6Cursor6moveUpEv
+                0x0000000008003fa8       0x38 ./src/main.o
+                0x0000000008003fa8                Cursor::moveUp()
+ .text._ZN6Cursor8moveDownEv
+                0x0000000008003fe0       0x40 ./src/main.o
+                0x0000000008003fe0                Cursor::moveDown()
+ .text._ZN6Cursor8moveLeftEv
+                0x0000000008004020       0x38 ./src/main.o
+                0x0000000008004020                Cursor::moveLeft()
+ .text._ZN6Cursor9moveRightEv
+                0x0000000008004058       0x40 ./src/main.o
+                0x0000000008004058                Cursor::moveRight()
+ .text._Z12Gesture_demoR6Cursor
+                0x0000000008004098       0x88 ./src/main.o
+                0x0000000008004098                Gesture_demo(Cursor&)
+ .text.main     0x0000000008004120       0x48 ./src/main.o
+                0x0000000008004120                main
+ .text.__errno  0x0000000008004168        0xc /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-errno.o)
+                0x0000000008004168                __errno
  .text._vsnprintf_r
-                0x0000000008003dd4       0x56 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-vsnprintf.o)
-                0x0000000008003dd4                _vsnprintf_r
-                0x0000000008003dd4                _vsniprintf_r
- *fill*         0x0000000008003e2a        0x2 
+                0x0000000008004174       0x56 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-vsnprintf.o)
+                0x0000000008004174                _vsnprintf_r
+                0x0000000008004174                _vsniprintf_r
+ *fill*         0x00000000080041ca        0x2 
  .text.vsnprintf
-                0x0000000008003e2c       0x1c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-vsnprintf.o)
-                0x0000000008003e2c                vsnprintf
-                0x0000000008003e2c                vsniprintf
+                0x00000000080041cc       0x1c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-vsnprintf.o)
+                0x00000000080041cc                vsnprintf
+                0x00000000080041cc                vsniprintf
  .text.__ssputs_r
-                0x0000000008003e48       0xb2 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
-                0x0000000008003e48                __ssputs_r
- *fill*         0x0000000008003efa        0x2 
+                0x00000000080041e8       0xb2 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
+                0x00000000080041e8                __ssputs_r
+ *fill*         0x000000000800429a        0x2 
  .text._svfprintf_r
-                0x0000000008003efc      0x1e8 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
-                0x0000000008003efc                _svfprintf_r
-                0x0000000008003efc                _svfiprintf_r
+                0x000000000800429c      0x1e8 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
+                0x000000000800429c                _svfprintf_r
+                0x000000000800429c                _svfiprintf_r
  .text._printf_common
-                0x00000000080040e4       0xec /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00000000080040e4                _printf_common
+                0x0000000008004484       0xec /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008004484                _printf_common
  .text._printf_i
-                0x00000000080041d0      0x24c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00000000080041d0                _printf_i
- *fill*         0x000000000800441c        0x4 
- .text          0x0000000008004420       0xa0 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memchr.o)
-                0x0000000008004420                memchr
- .text.memcpy   0x00000000080044c0       0x16 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memcpy-stub.o)
-                0x00000000080044c0                memcpy
- .text.memmove  0x00000000080044d6       0x36 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memmove.o)
-                0x00000000080044d6                memmove
- .text._free_r  0x000000000800450c       0x9c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-freer.o)
-                0x000000000800450c                _free_r
+                0x0000000008004570      0x24c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008004570                _printf_i
+ *fill*         0x00000000080047bc        0x4 
+ .text          0x00000000080047c0       0xa0 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memchr.o)
+                0x00000000080047c0                memchr
+ .text.memcpy   0x0000000008004860       0x16 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memcpy-stub.o)
+                0x0000000008004860                memcpy
+ .text.memmove  0x0000000008004876       0x36 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memmove.o)
+                0x0000000008004876                memmove
+ .text._free_r  0x00000000080048ac       0x9c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-freer.o)
+                0x00000000080048ac                _free_r
  .text._malloc_r
-                0x00000000080045a8       0xbc /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-mallocr.o)
-                0x00000000080045a8                _malloc_r
+                0x0000000008004948       0xbc /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008004948                _malloc_r
  .text._realloc_r
-                0x0000000008004664       0x4c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-reallocr.o)
-                0x0000000008004664                _realloc_r
- .text._sbrk_r  0x00000000080046b0       0x20 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-sbrkr.o)
-                0x00000000080046b0                _sbrk_r
+                0x0000000008004a04       0x4c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-reallocr.o)
+                0x0000000008004a04                _realloc_r
+ .text._sbrk_r  0x0000000008004a50       0x20 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-sbrkr.o)
+                0x0000000008004a50                _sbrk_r
  .text.__malloc_lock
-                0x00000000080046d0        0x2 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-mlock.o)
-                0x00000000080046d0                __malloc_lock
+                0x0000000008004a70        0x2 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-mlock.o)
+                0x0000000008004a70                __malloc_lock
  .text.__malloc_unlock
-                0x00000000080046d2        0x2 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-mlock.o)
-                0x00000000080046d2                __malloc_unlock
+                0x0000000008004a72        0x2 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-mlock.o)
+                0x0000000008004a72                __malloc_unlock
  .text._malloc_usable_size_r
-                0x00000000080046d4       0x14 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-msizer.o)
-                0x00000000080046d4                _malloc_usable_size_r
+                0x0000000008004a74       0x14 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-msizer.o)
+                0x0000000008004a74                _malloc_usable_size_r
  *(.rodata .rodata.* .constdata .constdata.*)
  .rodata.flagBitshiftOffset.12710
-                0x00000000080046e8        0x8 ./system/src/stm32f7xx/stm32f7xx_hal_dma.o
+                0x0000000008004a88        0x8 ./system/src/stm32f7xx/stm32f7xx_hal_dma.o
  .rodata.str1.4
-                0x00000000080046f0      0x146 ./system/src/cortexm/exception_handlers.o
- *fill*         0x0000000008004836        0x2 
+                0x0000000008004a90      0x146 ./system/src/cortexm/exception_handlers.o
+ *fill*         0x0000000008004bd6        0x2 
  .rodata.AHBPrescTable
-                0x0000000008004838       0x10 ./system/src/cmsis/system_stm32f7xx.o
-                0x0000000008004838                AHBPrescTable
+                0x0000000008004bd8       0x10 ./system/src/cmsis/system_stm32f7xx.o
+                0x0000000008004bd8                AHBPrescTable
  .rodata.Font24_Table
-                0x0000000008004848     0x1ab8 ./system/src/BSP/stm32f769i_discovery_lcd.o
-                0x0000000008004848                Font24_Table
+                0x0000000008004be8     0x1ab8 ./system/src/BSP/stm32f769i_discovery_lcd.o
+                0x0000000008004be8                Font24_Table
  .rodata.ShortRegData11
-                0x0000000008006300        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006300                ShortRegData11
- *fill*         0x0000000008006302        0x2 
+                0x00000000080066a0        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066a0                ShortRegData11
+ *fill*         0x00000000080066a2        0x2 
  .rodata.ShortRegData12
-                0x0000000008006304        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006304                ShortRegData12
- *fill*         0x0000000008006306        0x2 
+                0x00000000080066a4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066a4                ShortRegData12
+ *fill*         0x00000000080066a6        0x2 
  .rodata.ShortRegData13
-                0x0000000008006308        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006308                ShortRegData13
- *fill*         0x000000000800630a        0x2 
+                0x00000000080066a8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066a8                ShortRegData13
+ *fill*         0x00000000080066aa        0x2 
  .rodata.ShortRegData14
-                0x000000000800630c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800630c                ShortRegData14
- *fill*         0x000000000800630e        0x2 
+                0x00000000080066ac        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066ac                ShortRegData14
+ *fill*         0x00000000080066ae        0x2 
  .rodata.ShortRegData15
-                0x0000000008006310        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006310                ShortRegData15
- *fill*         0x0000000008006312        0x2 
+                0x00000000080066b0        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066b0                ShortRegData15
+ *fill*         0x00000000080066b2        0x2 
  .rodata.ShortRegData16
-                0x0000000008006314        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006314                ShortRegData16
- *fill*         0x0000000008006316        0x2 
+                0x00000000080066b4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066b4                ShortRegData16
+ *fill*         0x00000000080066b6        0x2 
  .rodata.ShortRegData30
-                0x0000000008006318        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006318                ShortRegData30
- *fill*         0x000000000800631a        0x2 
+                0x00000000080066b8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066b8                ShortRegData30
+ *fill*         0x00000000080066ba        0x2 
  .rodata.ShortRegData31
-                0x000000000800631c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800631c                ShortRegData31
- *fill*         0x000000000800631e        0x2 
+                0x00000000080066bc        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066bc                ShortRegData31
+ *fill*         0x00000000080066be        0x2 
  .rodata.lcdRegData1
-                0x0000000008006320        0x4 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006320                lcdRegData1
+                0x00000000080066c0        0x4 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066c0                lcdRegData1
  .rodata.ShortRegData33
-                0x0000000008006324        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006324                ShortRegData33
- *fill*         0x0000000008006326        0x2 
+                0x00000000080066c4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066c4                ShortRegData33
+ *fill*         0x00000000080066c6        0x2 
  .rodata.ShortRegData17
-                0x0000000008006328        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006328                ShortRegData17
- *fill*         0x000000000800632a        0x2 
+                0x00000000080066c8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066c8                ShortRegData17
+ *fill*         0x00000000080066ca        0x2 
  .rodata.ShortRegData35
-                0x000000000800632c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800632c                ShortRegData35
- *fill*         0x000000000800632e        0x2 
+                0x00000000080066cc        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066cc                ShortRegData35
+ *fill*         0x00000000080066ce        0x2 
  .rodata.lcdRegData5
-                0x0000000008006330        0x3 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006330                lcdRegData5
- *fill*         0x0000000008006333        0x1 
+                0x00000000080066d0        0x3 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066d0                lcdRegData5
+ *fill*         0x00000000080066d3        0x1 
  .rodata.lcdRegData6
-                0x0000000008006334        0x3 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006334                lcdRegData6
- *fill*         0x0000000008006337        0x1 
+                0x00000000080066d4        0x3 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066d4                lcdRegData6
+ *fill*         0x00000000080066d7        0x1 
  .rodata.lcdRegData7
-                0x0000000008006338        0x7 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006338                lcdRegData7
- *fill*         0x000000000800633f        0x1 
+                0x00000000080066d8        0x7 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066d8                lcdRegData7
+ *fill*         0x00000000080066df        0x1 
  .rodata.lcdRegData8
-                0x0000000008006340        0xf ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006340                lcdRegData8
- *fill*         0x000000000800634f        0x1 
+                0x00000000080066e0        0xf ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066e0                lcdRegData8
+ *fill*         0x00000000080066ef        0x1 
  .rodata.ShortRegData32
-                0x0000000008006350        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006350                ShortRegData32
- *fill*         0x0000000008006352        0x2 
+                0x00000000080066f0        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066f0                ShortRegData32
+ *fill*         0x00000000080066f2        0x2 
  .rodata.ShortRegData18
-                0x0000000008006354        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006354                ShortRegData18
- *fill*         0x0000000008006356        0x2 
+                0x00000000080066f4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066f4                ShortRegData18
+ *fill*         0x00000000080066f6        0x2 
  .rodata.ShortRegData40
-                0x0000000008006358        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006358                ShortRegData40
- *fill*         0x000000000800635a        0x2 
+                0x00000000080066f8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066f8                ShortRegData40
+ *fill*         0x00000000080066fa        0x2 
  .rodata.ShortRegData1
-                0x000000000800635c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800635c                ShortRegData1
- *fill*         0x000000000800635e        0x2 
+                0x00000000080066fc        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080066fc                ShortRegData1
+ *fill*         0x00000000080066fe        0x2 
  .rodata.ShortRegData2
-                0x0000000008006360        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006360                ShortRegData2
- *fill*         0x0000000008006362        0x2 
+                0x0000000008006700        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006700                ShortRegData2
+ *fill*         0x0000000008006702        0x2 
  .rodata.ShortRegData3
-                0x0000000008006364        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006364                ShortRegData3
- *fill*         0x0000000008006366        0x2 
+                0x0000000008006704        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006704                ShortRegData3
+ *fill*         0x0000000008006706        0x2 
  .rodata.ShortRegData4
-                0x0000000008006368        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006368                ShortRegData4
- *fill*         0x000000000800636a        0x2 
+                0x0000000008006708        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006708                ShortRegData4
+ *fill*         0x000000000800670a        0x2 
  .rodata.ShortRegData5
-                0x000000000800636c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800636c                ShortRegData5
- *fill*         0x000000000800636e        0x2 
+                0x000000000800670c        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x000000000800670c                ShortRegData5
+ *fill*         0x000000000800670e        0x2 
  .rodata.ShortRegData6
-                0x0000000008006370        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006370                ShortRegData6
- *fill*         0x0000000008006372        0x2 
+                0x0000000008006710        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006710                ShortRegData6
+ *fill*         0x0000000008006712        0x2 
  .rodata.ShortRegData7
-                0x0000000008006374        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006374                ShortRegData7
- *fill*         0x0000000008006376        0x2 
+                0x0000000008006714        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006714                ShortRegData7
+ *fill*         0x0000000008006716        0x2 
  .rodata.ShortRegData8
-                0x0000000008006378        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006378                ShortRegData8
- *fill*         0x000000000800637a        0x2 
+                0x0000000008006718        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006718                ShortRegData8
+ *fill*         0x000000000800671a        0x2 
  .rodata.ShortRegData9
-                0x000000000800637c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800637c                ShortRegData9
- *fill*         0x000000000800637e        0x2 
+                0x000000000800671c        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x000000000800671c                ShortRegData9
+ *fill*         0x000000000800671e        0x2 
  .rodata.lcdRegData2
-                0x0000000008006380        0x3 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006380                lcdRegData2
- *fill*         0x0000000008006383        0x1 
+                0x0000000008006720        0x3 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006720                lcdRegData2
+ *fill*         0x0000000008006723        0x1 
  .rodata.ShortRegData19
-                0x0000000008006384        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006384                ShortRegData19
- *fill*         0x0000000008006386        0x2 
+                0x0000000008006724        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006724                ShortRegData19
+ *fill*         0x0000000008006726        0x2 
  .rodata.lcdRegData4
-                0x0000000008006388       0x11 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006388                lcdRegData4
- *fill*         0x0000000008006399        0x3 
+                0x0000000008006728       0x11 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006728                lcdRegData4
+ *fill*         0x0000000008006739        0x3 
  .rodata.ShortRegData36
-                0x000000000800639c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800639c                ShortRegData36
- *fill*         0x000000000800639e        0x2 
+                0x000000000800673c        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x000000000800673c                ShortRegData36
+ *fill*         0x000000000800673e        0x2 
  .rodata.lcdRegData20
-                0x00000000080063a0       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063a0                lcdRegData20
+                0x0000000008006740       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006740                lcdRegData20
  .rodata.lcdRegData21
-                0x00000000080063b0       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063b0                lcdRegData21
+                0x0000000008006750       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006750                lcdRegData21
  .rodata.ShortRegData34
-                0x00000000080063c0        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063c0                ShortRegData34
- *fill*         0x00000000080063c2        0x2 
+                0x0000000008006760        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006760                ShortRegData34
+ *fill*         0x0000000008006762        0x2 
  .rodata.lcdRegData23
-                0x00000000080063c4       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063c4                lcdRegData23
+                0x0000000008006764       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006764                lcdRegData23
  .rodata.lcdRegData24
-                0x00000000080063d4       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063d4                lcdRegData24
+                0x0000000008006774       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006774                lcdRegData24
  .rodata.lcdRegData25
-                0x00000000080063e4        0x4 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063e4                lcdRegData25
+                0x0000000008006784        0x4 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006784                lcdRegData25
  .rodata.lcdRegData9
-                0x00000000080063e8        0xf ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063e8                lcdRegData9
- *fill*         0x00000000080063f7        0x1 
+                0x0000000008006788        0xf ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006788                lcdRegData9
+ *fill*         0x0000000008006797        0x1 
  .rodata.lcdRegData22
-                0x00000000080063f8        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080063f8                lcdRegData22
- *fill*         0x0000000008006403        0x1 
+                0x0000000008006798        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006798                lcdRegData22
+ *fill*         0x00000000080067a3        0x1 
  .rodata.lcdRegData28
-                0x0000000008006404        0x5 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006404                lcdRegData28
- *fill*         0x0000000008006409        0x3 
+                0x00000000080067a4        0x5 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067a4                lcdRegData28
+ *fill*         0x00000000080067a9        0x3 
  .rodata.ShortRegData37
-                0x000000000800640c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800640c                ShortRegData37
- *fill*         0x000000000800640e        0x2 
+                0x00000000080067ac        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067ac                ShortRegData37
+ *fill*         0x00000000080067ae        0x2 
  .rodata.lcdRegData3
-                0x0000000008006410       0x11 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006410                lcdRegData3
- *fill*         0x0000000008006421        0x3 
+                0x00000000080067b0       0x11 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067b0                lcdRegData3
+ *fill*         0x00000000080067c1        0x3 
  .rodata.lcdRegData27
-                0x0000000008006424        0x5 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006424                lcdRegData27
- *fill*         0x0000000008006429        0x3 
+                0x00000000080067c4        0x5 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067c4                lcdRegData27
+ *fill*         0x00000000080067c9        0x3 
  .rodata.ShortRegData38
-                0x000000000800642c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800642c                ShortRegData38
- *fill*         0x000000000800642e        0x2 
+                0x00000000080067cc        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067cc                ShortRegData38
+ *fill*         0x00000000080067ce        0x2 
  .rodata.ShortRegData39
-                0x0000000008006430        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006430                ShortRegData39
- *fill*         0x0000000008006432        0x2 
+                0x00000000080067d0        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067d0                ShortRegData39
+ *fill*         0x00000000080067d2        0x2 
  .rodata.ShortRegData20
-                0x0000000008006434        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006434                ShortRegData20
- *fill*         0x0000000008006436        0x2 
+                0x00000000080067d4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067d4                ShortRegData20
+ *fill*         0x00000000080067d6        0x2 
  .rodata.ShortRegData21
-                0x0000000008006438        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006438                ShortRegData21
- *fill*         0x000000000800643a        0x2 
+                0x00000000080067d8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067d8                ShortRegData21
+ *fill*         0x00000000080067da        0x2 
  .rodata.ShortRegData22
-                0x000000000800643c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800643c                ShortRegData22
- *fill*         0x000000000800643e        0x2 
+                0x00000000080067dc        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067dc                ShortRegData22
+ *fill*         0x00000000080067de        0x2 
  .rodata.ShortRegData23
-                0x0000000008006440        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006440                ShortRegData23
- *fill*         0x0000000008006442        0x2 
+                0x00000000080067e0        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067e0                ShortRegData23
+ *fill*         0x00000000080067e2        0x2 
  .rodata.ShortRegData24
-                0x0000000008006444        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006444                ShortRegData24
- *fill*         0x0000000008006446        0x2 
+                0x00000000080067e4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067e4                ShortRegData24
+ *fill*         0x00000000080067e6        0x2 
  .rodata.ShortRegData25
-                0x0000000008006448        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006448                ShortRegData25
- *fill*         0x000000000800644a        0x2 
+                0x00000000080067e8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067e8                ShortRegData25
+ *fill*         0x00000000080067ea        0x2 
  .rodata.ShortRegData26
-                0x000000000800644c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800644c                ShortRegData26
- *fill*         0x000000000800644e        0x2 
+                0x00000000080067ec        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067ec                ShortRegData26
+ *fill*         0x00000000080067ee        0x2 
  .rodata.ShortRegData27
-                0x0000000008006450        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006450                ShortRegData27
- *fill*         0x0000000008006452        0x2 
+                0x00000000080067f0        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067f0                ShortRegData27
+ *fill*         0x00000000080067f2        0x2 
  .rodata.ShortRegData28
-                0x0000000008006454        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006454                ShortRegData28
- *fill*         0x0000000008006456        0x2 
+                0x00000000080067f4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067f4                ShortRegData28
+ *fill*         0x00000000080067f6        0x2 
  .rodata.ShortRegData29
-                0x0000000008006458        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006458                ShortRegData29
- *fill*         0x000000000800645a        0x2 
+                0x00000000080067f8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067f8                ShortRegData29
+ *fill*         0x00000000080067fa        0x2 
  .rodata.ShortRegData43
-                0x000000000800645c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800645c                ShortRegData43
- *fill*         0x000000000800645e        0x2 
+                0x00000000080067fc        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080067fc                ShortRegData43
+ *fill*         0x00000000080067fe        0x2 
  .rodata.ShortRegData44
-                0x0000000008006460        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006460                ShortRegData44
- *fill*         0x0000000008006462        0x2 
+                0x0000000008006800        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006800                ShortRegData44
+ *fill*         0x0000000008006802        0x2 
  .rodata.ShortRegData45
-                0x0000000008006464        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006464                ShortRegData45
- *fill*         0x0000000008006466        0x2 
+                0x0000000008006804        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006804                ShortRegData45
+ *fill*         0x0000000008006806        0x2 
  .rodata.ShortRegData46
-                0x0000000008006468        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006468                ShortRegData46
- *fill*         0x000000000800646a        0x2 
+                0x0000000008006808        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006808                ShortRegData46
+ *fill*         0x000000000800680a        0x2 
  .rodata.ShortRegData47
-                0x000000000800646c        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800646c                ShortRegData47
- *fill*         0x000000000800646e        0x2 
+                0x000000000800680c        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x000000000800680c                ShortRegData47
+ *fill*         0x000000000800680e        0x2 
  .rodata.ShortRegData48
-                0x0000000008006470        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006470                ShortRegData48
- *fill*         0x0000000008006472        0x2 
+                0x0000000008006810        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006810                ShortRegData48
+ *fill*         0x0000000008006812        0x2 
  .rodata.ShortRegData49
-                0x0000000008006474        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006474                ShortRegData49
- *fill*         0x0000000008006476        0x2 
+                0x0000000008006814        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006814                ShortRegData49
+ *fill*         0x0000000008006816        0x2 
  .rodata.ShortRegData41
-                0x0000000008006478        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006478                ShortRegData41
- *fill*         0x000000000800647a        0x2 
+                0x0000000008006818        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006818                ShortRegData41
+ *fill*         0x000000000800681a        0x2 
  .rodata.lcdRegData10
-                0x000000000800647c        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x000000000800647c                lcdRegData10
- *fill*         0x0000000008006487        0x1 
+                0x000000000800681c        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x000000000800681c                lcdRegData10
+ *fill*         0x0000000008006827        0x1 
  .rodata.lcdRegData11
-                0x0000000008006488        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006488                lcdRegData11
- *fill*         0x0000000008006493        0x1 
+                0x0000000008006828        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006828                lcdRegData11
+ *fill*         0x0000000008006833        0x1 
  .rodata.lcdRegData12
-                0x0000000008006494       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006494                lcdRegData12
+                0x0000000008006834       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006834                lcdRegData12
  .rodata.lcdRegData13
-                0x00000000080064a4       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064a4                lcdRegData13
+                0x0000000008006844       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006844                lcdRegData13
  .rodata.lcdRegData14
-                0x00000000080064b4        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064b4                lcdRegData14
- *fill*         0x00000000080064bf        0x1 
+                0x0000000008006854        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006854                lcdRegData14
+ *fill*         0x000000000800685f        0x1 
  .rodata.lcdRegData15
-                0x00000000080064c0       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064c0                lcdRegData15
+                0x0000000008006860       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006860                lcdRegData15
  .rodata.lcdRegData16
-                0x00000000080064d0       0x10 ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064d0                lcdRegData16
+                0x0000000008006870       0x10 ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006870                lcdRegData16
  .rodata.lcdRegData17
-                0x00000000080064e0        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064e0                lcdRegData17
- *fill*         0x00000000080064eb        0x1 
+                0x0000000008006880        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006880                lcdRegData17
+ *fill*         0x000000000800688b        0x1 
  .rodata.lcdRegData18
-                0x00000000080064ec        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064ec                lcdRegData18
- *fill*         0x00000000080064f7        0x1 
+                0x000000000800688c        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x000000000800688c                lcdRegData18
+ *fill*         0x0000000008006897        0x1 
  .rodata.lcdRegData19
-                0x00000000080064f8        0xb ./system/include/Components/otm8009a/otm8009a.o
-                0x00000000080064f8                lcdRegData19
- *fill*         0x0000000008006503        0x1 
+                0x0000000008006898        0xb ./system/include/Components/otm8009a/otm8009a.o
+                0x0000000008006898                lcdRegData19
+ *fill*         0x00000000080068a3        0x1 
  .rodata.ShortRegData42
-                0x0000000008006504        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006504                ShortRegData42
- *fill*         0x0000000008006506        0x2 
+                0x00000000080068a4        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080068a4                ShortRegData42
+ *fill*         0x00000000080068a6        0x2 
  .rodata.ShortRegData10
-                0x0000000008006508        0x2 ./system/include/Components/otm8009a/otm8009a.o
-                0x0000000008006508                ShortRegData10
- *fill*         0x000000000800650a        0x2 
+                0x00000000080068a8        0x2 ./system/include/Components/otm8009a/otm8009a.o
+                0x00000000080068a8                ShortRegData10
+ *fill*         0x00000000080068aa        0x2 
  .rodata.str1.4
-                0x000000000800650c       0x2c ./src/main.o
+                0x00000000080068ac       0x48 ./src/main.o
  .rodata.str1.1
-                0x0000000008006538       0x11 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
+                0x00000000080068f4       0x11 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
  .rodata.str1.1
-                0x0000000008006549       0x22 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008006905       0x22 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
  *(vtable)
  *(.eh_frame*)
  *(.glue_7)
- .glue_7        0x000000000800656b        0x0 linker stubs
+ .glue_7        0x0000000008006927        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x000000000800656b        0x0 linker stubs
+ .glue_7t       0x0000000008006927        0x0 linker stubs
 
-.vfp11_veneer   0x000000000800656c        0x0
- .vfp11_veneer  0x000000000800656c        0x0 linker stubs
+.vfp11_veneer   0x0000000008006928        0x0
+ .vfp11_veneer  0x0000000008006928        0x0 linker stubs
 
-.v4_bx          0x000000000800656c        0x0
- .v4_bx         0x000000000800656c        0x0 linker stubs
+.v4_bx          0x0000000008006928        0x0
+ .v4_bx         0x0000000008006928        0x0 linker stubs
 
-.iplt           0x000000000800656c        0x0
- .iplt          0x000000000800656c        0x0 ./system/src/stm32f7xx/stm32f7xx_hal.o
+.iplt           0x0000000008006928        0x0
+ .iplt          0x0000000008006928        0x0 ./system/src/stm32f7xx/stm32f7xx_hal.o
 
-.rel.dyn        0x000000000800656c        0x0
- .rel.iplt      0x000000000800656c        0x0 ./system/src/stm32f7xx/stm32f7xx_hal.o
+.rel.dyn        0x0000000008006928        0x0
+ .rel.iplt      0x0000000008006928        0x0 ./system/src/stm32f7xx/stm32f7xx_hal.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x000000000800656c                . = ALIGN (0x4)
-                0x000000000800656c                __exidx_start = .
+                0x0000000008006928                . = ALIGN (0x4)
+                0x0000000008006928                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x000000000800656c                __exidx_end = .
-                0x000000000800656c                . = ALIGN (0x4)
-                0x000000000800656c                _etext = .
-                0x000000000800656c                __etext = .
+                0x0000000008006928                __exidx_end = .
+                0x0000000008006928                . = ALIGN (0x4)
+                0x0000000008006928                _etext = .
+                0x0000000008006928                __etext = .
 
-.data_CCMRAM    0x0000000010000000        0x0 load address 0x000000000800656c
+.data_CCMRAM    0x0000000010000000        0x0 load address 0x0000000008006928
  FILL mask 0xff
  *(.data.CCMRAM .data.CCMRAM.*)
                 0x0000000010000000                . = ALIGN (0x4)
-                0x000000000800656c                _sidata = LOADADDR (.data)
+                0x0000000008006928                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0x8c load address 0x000000000800656c
+.data           0x0000000020000000       0x8c load address 0x0000000008006928
  FILL mask 0xff
                 0x0000000020000000                _sdata = .
                 0x0000000020000000                __data_start__ = .
@@ -25463,7 +25487,7 @@ END GROUP
                 0x000000002000008c                _edata = .
                 0x000000002000008c                __data_end__ = .
 
-.igot.plt       0x000000002000008c        0x0 load address 0x00000000080065f8
+.igot.plt       0x000000002000008c        0x0 load address 0x00000000080069b4
  .igot.plt      0x000000002000008c        0x0 ./system/src/stm32f7xx/stm32f7xx_hal.o
 
 .bss_CCMRAM     0x0000000010000000        0x0
@@ -25733,7 +25757,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000     0x11b0
+.debug_aranges  0x0000000000000000     0x11e8
  *(.debug_aranges)
  .debug_aranges
                 0x0000000000000000       0xe0 ./system/src/stm32f7xx/stm32f7xx_hal.o
@@ -25798,12 +25822,12 @@ END GROUP
  .debug_aranges
                 0x0000000000001118       0x28 ./system/include/Components/otm8009a/otm8009a.o
  .debug_aranges
-                0x0000000000001140       0x70 ./src/main.o
+                0x0000000000001140       0xa8 ./src/main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x18fdd
+.debug_info     0x0000000000000000    0x1954c
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000      0x9c8 ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_info    0x00000000000009c8     0x1156 ./system/src/stm32f7xx/stm32f7xx_hal_cortex.o
@@ -25836,9 +25860,9 @@ END GROUP
  .debug_info    0x00000000000123d7     0x37c5 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_info    0x0000000000015b9c     0x127e ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_info    0x0000000000016e1a     0x12f2 ./system/include/Components/otm8009a/otm8009a.o
- .debug_info    0x000000000001810c      0xed1 ./src/main.o
+ .debug_info    0x000000000001810c     0x1440 ./src/main.o
 
-.debug_abbrev   0x0000000000000000     0x380d
+.debug_abbrev   0x0000000000000000     0x3956
  *(.debug_abbrev)
  .debug_abbrev  0x0000000000000000      0x1d3 ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_abbrev  0x00000000000001d3      0x2fe ./system/src/stm32f7xx/stm32f7xx_hal_cortex.o
@@ -25871,9 +25895,9 @@ END GROUP
  .debug_abbrev  0x0000000000002f48      0x30f ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_abbrev  0x0000000000003257      0x221 ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_abbrev  0x0000000000003478       0xf6 ./system/include/Components/otm8009a/otm8009a.o
- .debug_abbrev  0x000000000000356e      0x29f ./src/main.o
+ .debug_abbrev  0x000000000000356e      0x3e8 ./src/main.o
 
-.debug_line     0x0000000000000000    0x14b7d
+.debug_line     0x0000000000000000    0x14c47
  *(.debug_line)
  .debug_line    0x0000000000000000      0xc6e ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_line    0x0000000000000c6e      0xcb1 ./system/src/stm32f7xx/stm32f7xx_hal_cortex.o
@@ -25906,9 +25930,9 @@ END GROUP
  .debug_line    0x0000000000011e28     0x127e ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_line    0x00000000000130a6      0xc02 ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_line    0x0000000000013ca8      0x16b ./system/include/Components/otm8009a/otm8009a.o
- .debug_line    0x0000000000013e13      0xd6a ./src/main.o
+ .debug_line    0x0000000000013e13      0xe34 ./src/main.o
 
-.debug_frame    0x0000000000000000     0x3220
+.debug_frame    0x0000000000000000     0x32dc
  *(.debug_frame)
  .debug_frame   0x0000000000000000      0x1c8 ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_frame   0x00000000000001c8      0x154 ./system/src/stm32f7xx/stm32f7xx_hal_cortex.o
@@ -25940,21 +25964,21 @@ END GROUP
  .debug_frame   0x00000000000026d4      0x5fc ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_frame   0x0000000000002cd0      0x120 ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_frame   0x0000000000002df0       0x48 ./system/include/Components/otm8009a/otm8009a.o
- .debug_frame   0x0000000000002e38      0x124 ./src/main.o
- .debug_frame   0x0000000000002f5c       0x20 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-errno.o)
- .debug_frame   0x0000000000002f7c       0x48 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-vsnprintf.o)
- .debug_frame   0x0000000000002fc4       0x90 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x0000000000003054       0x60 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x00000000000030b4       0x28 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x00000000000030dc       0x28 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memmove.o)
- .debug_frame   0x0000000000003104       0x38 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x000000000000313c       0x2c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x0000000000003168       0x3c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x00000000000031a4       0x2c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x00000000000031d0       0x30 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-mlock.o)
- .debug_frame   0x0000000000003200       0x20 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x0000000000002e38      0x1e0 ./src/main.o
+ .debug_frame   0x0000000000003018       0x20 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x0000000000003038       0x48 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-vsnprintf.o)
+ .debug_frame   0x0000000000003080       0x90 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x0000000000003110       0x60 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x0000000000003170       0x28 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000000000003198       0x28 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00000000000031c0       0x38 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00000000000031f8       0x2c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x0000000000003224       0x3c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x0000000000003260       0x2c /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x000000000000328c       0x30 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-mlock.o)
+ .debug_frame   0x00000000000032bc       0x20 /Users/Daniel/Desktop/UW/EE 475/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/libg_nano.a(lib_a-nano-msizer.o)
 
-.debug_str      0x0000000000000000   0x157155
+.debug_str      0x0000000000000000   0x1572db
  *(.debug_str)
  .debug_str     0x0000000000000000   0x14b736 ./system/src/stm32f7xx/stm32f7xx_hal.o
                                      0x14bbb0 (size before relaxing)
@@ -26016,10 +26040,10 @@ END GROUP
                                      0x14c32b (size before relaxing)
  .debug_str     0x000000000015639a      0x45d ./system/include/Components/otm8009a/otm8009a.o
                                        0x3b9e (size before relaxing)
- .debug_str     0x00000000001567f7      0x95e ./src/main.o
-                                     0x14e063 (size before relaxing)
+ .debug_str     0x00000000001567f7      0xae4 ./src/main.o
+                                     0x14e22d (size before relaxing)
 
-.debug_loc      0x0000000000000000     0xcc2e
+.debug_loc      0x0000000000000000     0xce25
  *(.debug_loc)
  .debug_loc     0x0000000000000000       0x6a ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_loc     0x000000000000006a      0x53a ./system/src/stm32f7xx/stm32f7xx_hal_cortex.o
@@ -26048,7 +26072,7 @@ END GROUP
  .debug_loc     0x000000000000a7d3     0x1fc6 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_loc     0x000000000000c799      0x2f7 ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_loc     0x000000000000ca90       0x58 ./system/include/Components/otm8009a/otm8009a.o
- .debug_loc     0x000000000000cae8      0x146 ./src/main.o
+ .debug_loc     0x000000000000cae8      0x33d ./src/main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -26066,7 +26090,7 @@ END GROUP
  *(.debug_varnames)
 OUTPUT(FinalProject_v0.1.elf elf32-littlearm)
 
-.debug_ranges   0x0000000000000000     0x1000
+.debug_ranges   0x0000000000000000     0x1038
  .debug_ranges  0x0000000000000000       0xd0 ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_ranges  0x00000000000000d0       0x98 ./system/src/stm32f7xx/stm32f7xx_hal_cortex.o
  .debug_ranges  0x0000000000000168       0x80 ./system/src/stm32f7xx/stm32f7xx_hal_dma.o
@@ -26098,9 +26122,9 @@ OUTPUT(FinalProject_v0.1.elf elf32-littlearm)
  .debug_ranges  0x0000000000000d90      0x1a0 ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_ranges  0x0000000000000f30       0x58 ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_ranges  0x0000000000000f88       0x18 ./system/include/Components/otm8009a/otm8009a.o
- .debug_ranges  0x0000000000000fa0       0x60 ./src/main.o
+ .debug_ranges  0x0000000000000fa0       0x98 ./src/main.o
 
-.debug_macro    0x0000000000000000    0x3b325
+.debug_macro    0x0000000000000000    0x3b35e
  .debug_macro   0x0000000000000000      0x544 ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_macro   0x0000000000000544      0x886 ./system/src/stm32f7xx/stm32f7xx_hal.o
  .debug_macro   0x0000000000000dca      0x294 ./system/src/stm32f7xx/stm32f7xx_hal.o
@@ -26278,7 +26302,8 @@ OUTPUT(FinalProject_v0.1.elf elf32-littlearm)
  .debug_macro   0x0000000000039404      0x13e ./system/src/BSP/stm32f769i_discovery_lcd.o
  .debug_macro   0x0000000000039542      0x537 ./system/src/BSP/stm32f769i_discovery_sdram.o
  .debug_macro   0x0000000000039a79       0x33 ./system/include/Components/otm8009a/otm8009a.o
- .debug_macro   0x0000000000039aac      0x5ca ./src/main.o
- .debug_macro   0x000000000003a076     0x1114 ./src/main.o
- .debug_macro   0x000000000003b18a       0x97 ./src/main.o
- .debug_macro   0x000000000003b221      0x104 ./src/main.o
+ .debug_macro   0x0000000000039aac      0x5cf ./src/main.o
+ .debug_macro   0x000000000003a07b     0x1114 ./src/main.o
+ .debug_macro   0x000000000003b18f       0x97 ./src/main.o
+ .debug_macro   0x000000000003b226      0x104 ./src/main.o
+ .debug_macro   0x000000000003b32a       0x34 ./src/main.o
