@@ -239,7 +239,7 @@ uint8_t BSP_TS_ITConfig(void)
   HAL_GPIO_Init(TS_INT_GPIO_PORT, &gpio_init_structure);
 
   /* Enable and set the TS_INT EXTI Interrupt to an intermediate priority */
-  HAL_NVIC_SetPriority((IRQn_Type)(TS_INT_EXTI_IRQn), 0x0F, 0x00);
+  HAL_NVIC_SetPriority((IRQn_Type)(TS_INT_EXTI_IRQn), /*0x0F*/ 0x00, 0x00);
   HAL_NVIC_EnableIRQ((IRQn_Type)(TS_INT_EXTI_IRQn));
 
   /* Enable the TS in interrupt mode */
@@ -458,6 +458,7 @@ __weak void BSP_TS_INT_MspInit(void)
   gpio_init_structure.Speed     = GPIO_SPEED_HIGH;
   HAL_GPIO_Init(TS_INT_GPIO_PORT, &gpio_init_structure);
 }
+
 
 /**
   * @}

@@ -1,16 +1,50 @@
 #include "global.h"
 
+static TS_StateTypeDef* ts_state;
 
 int main(void) {
 	system_init();
 	LCD_Config();
 	LCD_Texture_config();
 	GPIO_Config();
-
+	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetXSize());
+	BSP_TS_ITConfig();
 	Cursor crs((int16_t) BSP_LCD_GetXSize() / 2, (int16_t)  BSP_LCD_GetYSize() / 2, RADIUS);
+
+
 	while(1) {
 		get_track_pad_state();
 		Gesture_demo(crs);
+	}
+}
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if(GPIO_Pin == TS_INT_PIN) {
+		// touch Screen Handler
+		ts_state->touchDetected = 1;
+
+		if(BSP_TS_GetState(ts_state) == TS_OK) {
+			uint16_t X = ts_state->touchX[0], Y = ts_state->touchY[0];
+			// TODO: check allocate screen
+			/*
+			Activity* curUI = UI::instance()->getCurUI();
+			if(curUI != NULL) {
+				uint32_t widget_index = curUI->allocator_[X][Y];
+				(curUI->widgets.at(widget_index)).onClick();
+			}*/
+			string s = "X = ";
+			char x_index[10];
+			char y_index[10];
+			itoa((int) X, x_index, 10);
+			itoa((int) Y, y_index, 10);
+			string X_index(x_index);
+			string Y_index(y_index);
+
+
+			s.append(X_index).append(" ").append("Y = ").append(Y_index);
+			BSP_LCD_DisplayStringAtLine(1, (uint8_t*) "X = ");
+		}
 	}
 }
 
@@ -92,7 +126,9 @@ void Gesture_demo(Cursor& crs) {
 
 void system_init(void) {
 	CPU_CACHE_Enable();
+
 	HAL_Init();
+
 	SystemClock_Config();
 }
 
@@ -137,6 +173,13 @@ void SystemClock_Config(void)
   {
     while(1) { ; }
   }
+  //
+  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+
+  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+
+
+  HAL_NVIC_SetPriority((IRQn_Type)(SysTick_IRQn), 0x00, 0x00);
 }
 
 
@@ -212,4 +255,119 @@ void Cursor::moveRight(void) {
 	BSP_LCD_FillCircle((uint16_t) x_, (uint16_t) y_, 20);
 }
 
+/* -- Activity Class Functions -- */
+Activity::Activity(Activity* pre) : pre_(pre) {
+	back_color_ = LCD_COLOR_WHITE;
+	bitmap_ = (uint32_t **) calloc(BSP_LCD_GetYSize(), sizeof(uint32_t*));
+	allocator_ = (uint32_t **) calloc(BSP_LCD_GetYSize(), sizeof(uint32_t*));
+	for(uint32_t i = 0; i < BSP_LCD_GetYSize(); i++) {
+		bitmap_[i] = (uint32_t *) calloc(BSP_LCD_GetXSize(), sizeof(uint32_t));
+		allocator_[i] = (uint32_t *) calloc(BSP_LCD_GetXSize(), sizeof(uint32_t));
+	}
+	for(uint16_t i = 0; i < BSP_LCD_GetXSize(); i++) {
+		for(uint16_t j = 0; j < BSP_LCD_GetYSize(); j++) {
+			BSP_LCD_DrawPixel(i, j, back_color_);
+		}
+	}
+}
 
+bool Activity::addWidget(Widget widget) {
+	if((widget.width_ == 0) | (widget.height_ == 0) | (widget.x1_ + widget.width_ >= BSP_LCD_GetXSize()) | (widget.y1_ + widget.height_ >= BSP_LCD_GetYSize()))
+			return false;
+
+	for(uint16_t i = widget.x1_; i < widget.x1_ + widget.width_; i++) {
+		for(uint16_t j = widget.y1_; j < widget.y1_ + widget.height_; j++) {
+			if(this->allocator_[i][j] != 0) return false;
+		}
+	}
+	for(uint16_t i = widget.x1_; i < widget.x1_ + widget.width_; i++) {
+		for(uint16_t j = widget.y1_; j < widget.y1_ + widget.height_; j++) {
+			this->allocator_[i][j] = (uint32_t) this->widgets.size();
+
+		}
+	}
+	this->index_map[&widget] = this->index_map.size();
+	this->widgets.push_back(widget);
+	return true;
+}
+
+
+
+void Activity::SetBackColor(uint32_t color) {
+	this->back_color_ = color;
+	for(uint16_t i = 0; i < BSP_LCD_GetXSize(); i++) {
+		for(uint16_t j = 0; j < BSP_LCD_GetYSize(); j++) {
+			if(allocator_[i][j] == 0) {
+				BSP_LCD_DrawPixel(i, j, color);
+			}
+		}
+	}
+}
+
+void Activity::OnDestroy(void) {
+	for(uint32_t i = 0; i < BSP_LCD_GetYSize(); i++) {
+		free(bitmap_[i]);
+		free(allocator_[i]);
+	}
+	free(bitmap_);
+	free(allocator_);
+}
+
+/* -- Widget Class Functions -- */
+Widget::Widget(const uint16_t x1, const uint16_t y1, const uint16_t width, const uint16_t height)
+			: x1_(x1), y1_(y1), width_(width), height_(height) {
+	this->btmp_ = {};
+}
+
+Widget::Widget(const Widget &copy) {
+	this->x1_ = copy.x1_;
+	this->y1_ = copy.y1_;
+	this->width_ = copy.width_;
+	this->height_ = copy.height_;
+	this->btmp_ = copy.btmp_;
+}
+
+
+void Widget::onClick(void) {
+	// empty function, user override
+}
+
+void Widget::draw(void) {
+	// empty function, user override
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_FillRect(this->x1_, this->y1_, this->width_, this->height_);
+	BSP_LCD_SetTextColor(LCD_COLOR_TRANSPARENT);
+}
+
+void Widget::clear(uint32_t backcolor) {
+	for(uint16_t i = this->x1_; i < this->x1_ + this->width_; i++) {
+		for(uint16_t j = this->y1_; j < this->y1_ + this->height_; j++) {
+			BSP_LCD_DrawPixel(i, j, backcolor);
+		}
+	}
+}
+
+/* -- BackArrow Class Functions -- */
+BackArrow::BackArrow(Activity* pre, Activity* cur) : Widget(0, 0, 80, 80), pre_(pre), cur_(cur) {
+
+}
+// @Override
+void BackArrow::onClick(void) {
+	// TODO: update current UI
+	UI::instance()->setCurUI(cur_->pre_);
+	cur_->OnDestroy();
+}
+
+/* -- UI Class Functions -- */
+Activity* UI::getCurUI(void) {
+	return this->curUI_;
+}
+
+void UI::setCurUI(Activity* next) {
+	this->curUI_ = next;
+	for(uint16_t i = 0; i < BSP_LCD_GetXSize(); i++) {
+		for(uint16_t j = 0; j < BSP_LCD_GetYSize(); j++) {
+			BSP_LCD_DrawPixel(i, j, this->curUI_->bitmap_[i][j]);
+		}
+	}
+}

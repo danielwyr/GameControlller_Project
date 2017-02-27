@@ -92,7 +92,12 @@ src/main.o: ../src/main.cpp ../include/global.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_dsi.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_dma2d.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_ltdc.h \
- ../system/include/BSP/../../../Utilities/Fonts/fonts.h
+ ../system/include/BSP/../../../Utilities/Fonts/fonts.h \
+ ../system/include/BSP/stm32f769i_discovery_ts.h \
+ ../system/include/BSP/stm32f769i_discovery_lcd.h \
+ ../system/include/cmsis/stm32f769xx.h \
+ ../system/include/BSP/../Components/ft6x06/ft6x06.h \
+ ../system/include/BSP/../Components/ft6x06/../Common/ts.h
 
 ../include/global.h:
 
@@ -285,3 +290,13 @@ src/main.o: ../src/main.cpp ../include/global.h \
 ../system/include/stm32f7xx/stm32f7xx_hal_ltdc.h:
 
 ../system/include/BSP/../../../Utilities/Fonts/fonts.h:
+
+../system/include/BSP/stm32f769i_discovery_ts.h:
+
+../system/include/BSP/stm32f769i_discovery_lcd.h:
+
+../system/include/cmsis/stm32f769xx.h:
+
+../system/include/BSP/../Components/ft6x06/ft6x06.h:
+
+../system/include/BSP/../Components/ft6x06/../Common/ts.h:

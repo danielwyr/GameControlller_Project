@@ -188,6 +188,7 @@ uint8_t BSP_TS_ITConfig(void);
    need to be changed for specific (example GPIO allocation) */
 void BSP_TS_INT_MspInit(void);
 
+
 /**
   * @}
   */

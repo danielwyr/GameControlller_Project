@@ -1,11 +1,21 @@
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <string>
+#include <string.h>
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_hal_rcc.h"
 #include "stm32f7xx_hal_flash_ex.h"
 #include "stm32f7xx_hal_gpio.h"
 #include "stm32f769i_discovery.h"
 #include "stm32f769i_discovery_lcd.h"
+#include "stm32f769i_discovery_ts.h"
+
+using namespace std;
 
 #ifdef __cplusplus
 extern "C"
@@ -29,6 +39,86 @@ private:
 	Cursor &operator=(const Cursor &rhs);
 };
 
+class Widget {
+public:
+	uint16_t x1_;
+	uint16_t y1_;
+	uint16_t width_;
+	uint16_t height_;
+	uint32_t** btmp_;
+
+	Widget(const uint16_t, const uint16_t, const uint16_t width, const uint16_t height);
+	Widget(const Widget &copy);
+	Widget & operator=(const Widget &rhs) {
+		if(this != &rhs) {
+			for(uint16_t i = 0; i < width_; i++) {
+				free(btmp_[i]);
+			}
+			free(btmp_);
+			btmp_ = rhs.btmp_;
+			x1_ = rhs.x1_;
+			y1_ = rhs.y1_;
+			width_ = rhs.width_;
+			height_ = rhs.height_;
+		}
+		return *this;
+	}
+	void onClick(void);
+	void draw(void);
+	void clear(uint32_t backcolor);
+	void onDestroy(void);
+};
+
+
+
+class Activity {
+public:
+	uint32_t back_color_;
+	uint32_t** bitmap_;
+	uint32_t** allocator_;
+
+	Activity* pre_;
+	vector<Widget> widgets;
+	map<Widget*, int> index_map;
+
+	Activity(Activity*);
+	bool addWidget(Widget);
+	void OnDestroy(void);
+	void SetBackColor(uint32_t);
+private:
+	Activity(const Activity &copy);
+	Activity &operator=(const Activity &rhs);
+};
+
+class UI {
+public:
+	static UI* instance() {
+		if(!instance_) {
+			instance_ = new UI;
+		}
+		return instance_;
+	}
+	Activity* getCurUI(void);
+	void setCurUI(Activity* next);
+private:
+	Activity* curUI_;
+	static UI* instance_;
+	UI(void) {
+		curUI_ = NULL;
+	}
+};
+
+
+class BackArrow : public Widget {
+public:
+	Activity *pre_;
+	Activity *cur_;
+	BackArrow(Activity*, Activity*);
+	void onClick(void);
+};
+
+
+
 typedef struct trackPadState {
 	bool up;
 	bool down;
@@ -51,6 +141,7 @@ void get_track_pad_state(void);
 void Gesture_demo(Cursor&);
 void LCD_Texture_config(void);
 
+UI* UI::instance_ = 0;
 
 TRACK_PAD_State track_pad_state;
 
