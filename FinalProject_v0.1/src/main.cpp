@@ -7,20 +7,19 @@ int main(void) {
 	LCD_Config();
 	LCD_Texture_config();
 	GPIO_Config();
+	HAL_NVIC_ClearPendingIRQ(IRQn_Type::EXTI15_10_IRQn);
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetXSize());
 	BSP_TS_ITConfig();
-	Cursor crs((int16_t) BSP_LCD_GetXSize() / 2, (int16_t)  BSP_LCD_GetYSize() / 2, RADIUS);
 
-
+	//Cursor crs((int16_t) BSP_LCD_GetXSize() / 2, (int16_t)  BSP_LCD_GetYSize() / 2, RADIUS);
 	while(1) {
-		get_track_pad_state();
-		Gesture_demo(crs);
+		//get_track_pad_state();
+		//Gesture_demo(crs);
 	}
 }
 
-
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if(GPIO_Pin == TS_INT_PIN) {
+	if(GPIO_Pin == GPIO_PIN_13) {
 		// touch Screen Handler
 		ts_state->touchDetected = 1;
 
@@ -43,7 +42,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 
 			s.append(X_index).append(" ").append("Y = ").append(Y_index);
-			BSP_LCD_DisplayStringAtLine(1, (uint8_t*) "X = ");
+			const char* cc = s.c_str();
+			BSP_LCD_DisplayStringAtLine(1, (uint8_t*) cc);
 		}
 	}
 }
@@ -83,6 +83,8 @@ void GPIO_init(GPIO_TypeDef* gpio_bus, GPIO_InitTypeDef* gpio_typeDef, uint32_t 
 }
 
 void GPIO_Config(void) {
+	__HAL_RCC_GPIOF_CLK_ENABLE();
+	__HAL_RCC_GPIOJ_CLK_ENABLE();
 	GPIO_init(GPIOF, &d0_init, GPIO_PIN_7);
 	GPIO_init(GPIOJ, &d1_init, GPIO_PIN_4);
 	GPIO_init(GPIOJ, &d2_init, GPIO_PIN_1);
@@ -134,52 +136,51 @@ void system_init(void) {
 
 void SystemClock_Config(void)
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  HAL_StatusTypeDef ret = HAL_OK;
+	RCC_ClkInitTypeDef RCC_ClkInitStruct;
+	RCC_OscInitTypeDef RCC_OscInitStruct;
+	HAL_StatusTypeDef ret = HAL_OK;
 
-  /* Enable HSE Oscillator and activate PLL with HSE as source */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 400;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 8;
+	/* Enable HSE Oscillator and activate PLL with HSE as source */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+	RCC_OscInitStruct.PLL.PLLM = 25;
+	RCC_OscInitStruct.PLL.PLLN = 400;
+	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+	RCC_OscInitStruct.PLL.PLLQ = 9;
+	RCC_OscInitStruct.PLL.PLLR = 7;
 
-  ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
-  if(ret != HAL_OK)
-  {
-    while(1) { ; }
-  }
+	ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
+	if(ret != HAL_OK)
+	{
+		while(1) { ; }
+	}
 
-  /* Activate the OverDrive to reach the 200 MHz Frequency */
-  ret = HAL_PWREx_EnableOverDrive();
-  if(ret != HAL_OK)
-  {
-    while(1) { ; }
-  }
+	/* Activate the OverDrive to reach the 216 MHz Frequency */
+	ret = HAL_PWREx_EnableOverDrive();
+	if(ret != HAL_OK)
+	{
+		while(1) { ; }
+	}
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+	/* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 clocks dividers */
+	RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6);
-  if(ret != HAL_OK)
-  {
-    while(1) { ; }
-  }
-  //
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+	ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7);
+	if(ret != HAL_OK)
+	{
+		while(1) { ; }
+	}
 
-  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-
-
-  HAL_NVIC_SetPriority((IRQn_Type)(SysTick_IRQn), 0x00, 0x00);
+	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+	/* SysTick_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority((IRQn_Type) SysTick_IRQn, 0, 0);
 }
 
 
@@ -195,7 +196,7 @@ void CPU_CACHE_Enable(void)
 void Error_Handler(void)
 {
     /* Turn LED1 on */
-    BSP_LED_On(LED1);
+    BSP_LED_On(Led_TypeDef::LED1);
     while(1)
     {
     }
@@ -359,10 +360,6 @@ void BackArrow::onClick(void) {
 }
 
 /* -- UI Class Functions -- */
-Activity* UI::getCurUI(void) {
-	return this->curUI_;
-}
-
 void UI::setCurUI(Activity* next) {
 	this->curUI_ = next;
 	for(uint16_t i = 0; i < BSP_LCD_GetXSize(); i++) {

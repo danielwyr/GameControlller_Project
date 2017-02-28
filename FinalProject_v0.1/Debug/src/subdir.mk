@@ -4,17 +4,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/_write.c 
+../src/_write.c \
+../src/stm32f7xx_it.c 
 
 CPP_SRCS += \
 ../src/main.cpp 
 
 OBJS += \
 ./src/_write.o \
-./src/main.o 
+./src/main.o \
+./src/stm32f7xx_it.o 
 
 C_DEPS += \
-./src/_write.d 
+./src/_write.d \
+./src/stm32f7xx_it.d 
 
 CPP_DEPS += \
 ./src/main.d 

@@ -14,6 +14,7 @@
 #include "stm32f769i_discovery.h"
 #include "stm32f769i_discovery_lcd.h"
 #include "stm32f769i_discovery_ts.h"
+#include "stm32f7xx_it.h"
 
 using namespace std;
 
@@ -98,7 +99,9 @@ public:
 		}
 		return instance_;
 	}
-	Activity* getCurUI(void);
+	Activity* getCurUI(void) {
+		return this->curUI_;
+	}
 	void setCurUI(Activity* next);
 private:
 	Activity* curUI_;
