@@ -98,7 +98,9 @@ src/main.o: ../src/main.cpp ../include/global.h \
  ../system/include/cmsis/stm32f769xx.h \
  ../system/include/BSP/../Components/ft6x06/ft6x06.h \
  ../system/include/BSP/../Components/ft6x06/../Common/ts.h \
- ../include/stm32f7xx_it.h
+ ../include/stm32f7xx_it.h ../include/icon.h ../include/heart.h \
+ ../include/controller_icon.h ../include/heart_rate_icon.h \
+ ../include/pokemon_icon.h ../include/tv_remote_icon.h
 
 ../include/global.h:
 
@@ -303,3 +305,15 @@ src/main.o: ../src/main.cpp ../include/global.h \
 ../system/include/BSP/../Components/ft6x06/../Common/ts.h:
 
 ../include/stm32f7xx_it.h:
+
+../include/icon.h:
+
+../include/heart.h:
+
+../include/controller_icon.h:
+
+../include/heart_rate_icon.h:
+
+../include/pokemon_icon.h:
+
+../include/tv_remote_icon.h:

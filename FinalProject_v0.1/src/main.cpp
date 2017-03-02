@@ -7,9 +7,11 @@ int main(void) {
 	LCD_Config();
 	LCD_Texture_config();
 	GPIO_Config();
-	HAL_NVIC_ClearPendingIRQ(IRQn_Type::EXTI15_10_IRQn);
-	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetXSize());
-	BSP_TS_ITConfig();
+	//BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetXSize());
+	//BSP_TS_ITConfig();
+
+	MainActivity* mainActivity = new MainActivity();
+	mainActivity->onCreate();
 
 	//Cursor crs((int16_t) BSP_LCD_GetXSize() / 2, (int16_t)  BSP_LCD_GetYSize() / 2, RADIUS);
 	while(1) {
@@ -26,13 +28,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		if(BSP_TS_GetState(ts_state) == TS_OK) {
 			uint16_t X = ts_state->touchX[0], Y = ts_state->touchY[0];
 			// TODO: check allocate screen
-			/*
+
 			Activity* curUI = UI::instance()->getCurUI();
 			if(curUI != NULL) {
 				uint32_t widget_index = curUI->allocator_[X][Y];
-				(curUI->widgets.at(widget_index)).onClick();
-			}*/
-			string s = "X = ";
+				curUI->widgets.at(widget_index)->onClick();
+			}
+			string s = "";
 			char x_index[10];
 			char y_index[10];
 			itoa((int) X, x_index, 10);
@@ -41,7 +43,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			string Y_index(y_index);
 
 
-			s.append(X_index).append(" ").append("Y = ").append(Y_index);
+			s.append("X = ").append(X_index).append(" ").append("Y = ").append(Y_index);
 			const char* cc = s.c_str();
 			BSP_LCD_DisplayStringAtLine(1, (uint8_t*) cc);
 		}
@@ -78,7 +80,6 @@ void GPIO_init(GPIO_TypeDef* gpio_bus, GPIO_InitTypeDef* gpio_typeDef, uint32_t 
 	gpio_typeDef->Pull = GPIO_PULLDOWN;
 	gpio_typeDef->Mode = GPIO_MODE_INPUT;
 	//gpio_typeDef->Speed = GPIO_SPEED_HIGH;
-	//gpio_typeDef->Alternate = GPIO_AF2_TIM3;
 	HAL_GPIO_Init(gpio_bus, gpio_typeDef);
 }
 
@@ -202,6 +203,17 @@ void Error_Handler(void)
     }
 }
 
+uint32_t getBitFromPic(PICS pic, int x, int y) {
+	switch(pic) {
+	case HEART: return heart[x][y];
+	case HEART_RATE: return heart_rate_icon[x][y];
+	case TV_REMOTE: return tv_remote_icon[x][y];
+	case CONTROLLER: return controller_icon[x][y];
+	case POKEMON: return pokemon_icon[x][y];
+	default: return 0;
+	}
+}
+
 /* -- Cursor Class Functions-- */
 Cursor::Cursor(const int16_t x, const int16_t y, const uint16_t rad) : x_(x), y_(y), rad_(rad) {
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -259,46 +271,55 @@ void Cursor::moveRight(void) {
 /* -- Activity Class Functions -- */
 Activity::Activity(Activity* pre) : pre_(pre) {
 	back_color_ = LCD_COLOR_WHITE;
-	bitmap_ = (uint32_t **) calloc(BSP_LCD_GetYSize(), sizeof(uint32_t*));
-	allocator_ = (uint32_t **) calloc(BSP_LCD_GetYSize(), sizeof(uint32_t*));
-	for(uint32_t i = 0; i < BSP_LCD_GetYSize(); i++) {
-		bitmap_[i] = (uint32_t *) calloc(BSP_LCD_GetXSize(), sizeof(uint32_t));
-		allocator_[i] = (uint32_t *) calloc(BSP_LCD_GetXSize(), sizeof(uint32_t));
+	bitmap_ = (uint32_t **) calloc(BSP_LCD_GetXSize(), sizeof(uint32_t*));
+	allocator_ = (int **) calloc(BSP_LCD_GetXSize(), sizeof(int*));
+	for(uint32_t i = 0; i < BSP_LCD_GetXSize(); i++) {
+		bitmap_[i] = (uint32_t *) calloc(BSP_LCD_GetYSize(), sizeof(uint32_t));
+		if(bitmap_[i] == NULL) while(1);
+		allocator_[i] = (int *) calloc(BSP_LCD_GetYSize(), sizeof(int));
+		if(allocator_[i]) while(1);
 	}
 	for(uint16_t i = 0; i < BSP_LCD_GetXSize(); i++) {
 		for(uint16_t j = 0; j < BSP_LCD_GetYSize(); j++) {
 			BSP_LCD_DrawPixel(i, j, back_color_);
+			bitmap_[i][j] = back_color_;
+			allocator_[i][j] = -1;
 		}
 	}
 }
 
-bool Activity::addWidget(Widget widget) {
-	if((widget.width_ == 0) | (widget.height_ == 0) | (widget.x1_ + widget.width_ >= BSP_LCD_GetXSize()) | (widget.y1_ + widget.height_ >= BSP_LCD_GetYSize()))
+bool Activity::addWidget(Widget* widget) {
+	if((widget->width_ == 0) | (widget->height_ == 0) | (widget->x1_ + widget->width_ >= BSP_LCD_GetXSize()) | (widget->y1_ + widget->height_ >= BSP_LCD_GetYSize())) {
 			return false;
-
-	for(uint16_t i = widget.x1_; i < widget.x1_ + widget.width_; i++) {
-		for(uint16_t j = widget.y1_; j < widget.y1_ + widget.height_; j++) {
-			if(this->allocator_[i][j] != 0) return false;
+	}
+	for(uint16_t i = widget->x1_; i < widget->x1_ + widget->width_; i++) {
+		for(uint16_t j = widget->y1_; j < widget->y1_ + widget->height_; j++) {
+			if(this->allocator_[i][j] != -1) return false;
 		}
 	}
-	for(uint16_t i = widget.x1_; i < widget.x1_ + widget.width_; i++) {
-		for(uint16_t j = widget.y1_; j < widget.y1_ + widget.height_; j++) {
-			this->allocator_[i][j] = (uint32_t) this->widgets.size();
-
+	for(int i = widget->x1_; i < widget->x1_ + widget->width_; i++) {
+		for(int j = widget->y1_; j < widget->y1_ + widget->height_; j++) {
+			this->allocator_[i][j] = this->widgets.size();
+			int x = i - widget->x1_;
+			int y = j - widget->y1_;
+			if(x < 0 || x >= widget->width_ || y < 0 || y >= widget->height_) {
+				while(1);
+			}
+			uint32_t bit = getBitFromPic(widget->btmp_, x, y);
+			this->bitmap_[i][j] = bit;
 		}
 	}
-	this->index_map[&widget] = this->index_map.size();
+	//this->index_map[widget] = this->index_map.size();
 	this->widgets.push_back(widget);
+	UI::instance()->setCurUI(this);
 	return true;
 }
-
-
 
 void Activity::SetBackColor(uint32_t color) {
 	this->back_color_ = color;
 	for(uint16_t i = 0; i < BSP_LCD_GetXSize(); i++) {
 		for(uint16_t j = 0; j < BSP_LCD_GetYSize(); j++) {
-			if(allocator_[i][j] == 0) {
+			if(allocator_[i][j] == -1) {
 				BSP_LCD_DrawPixel(i, j, color);
 			}
 		}
@@ -315,10 +336,10 @@ void Activity::OnDestroy(void) {
 }
 
 /* -- Widget Class Functions -- */
-Widget::Widget(const uint16_t x1, const uint16_t y1, const uint16_t width, const uint16_t height)
-			: x1_(x1), y1_(y1), width_(width), height_(height) {
-	this->btmp_ = {};
+Widget::Widget(const uint16_t x1, const uint16_t y1, const uint16_t width, const uint16_t height, const PICS btmp) : x1_(x1), y1_(y1), width_(width), height_(height), btmp_(btmp) {
+	//this->btmp_ = (uint32_t**) calloc(1, sizeof(uint32_t*));
 }
+
 
 Widget::Widget(const Widget &copy) {
 	this->x1_ = copy.x1_;
@@ -349,9 +370,10 @@ void Widget::clear(uint32_t backcolor) {
 }
 
 /* -- BackArrow Class Functions -- */
+/*
 BackArrow::BackArrow(Activity* pre, Activity* cur) : Widget(0, 0, 80, 80), pre_(pre), cur_(cur) {
 
-}
+}*/
 // @Override
 void BackArrow::onClick(void) {
 	// TODO: update current UI
@@ -368,3 +390,25 @@ void UI::setCurUI(Activity* next) {
 		}
 	}
 }
+
+/* -- HeartDemo Widget Class -- */
+
+HeartDemo::HeartDemo(const uint16_t x1, const uint16_t y1)
+		: Widget(x1, y1, 125, 125, HEART_RATE) {
+}
+
+/* -- MainActivity Class Functions -- */
+MainActivity::MainActivity(void) : Activity((Activity*) 0) {
+
+}
+
+void MainActivity::onCreate(void) {
+	HeartDemo* ht = new HeartDemo(40, 40);
+	this->addWidget(ht);
+}
+
+bool MainActivity::addWidget(Widget* widget) {
+	return Activity::addWidget(widget);
+}
+
+

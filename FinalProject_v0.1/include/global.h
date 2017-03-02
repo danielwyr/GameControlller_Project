@@ -16,11 +16,24 @@
 #include "stm32f769i_discovery_ts.h"
 #include "stm32f7xx_it.h"
 
+#include "icon.h"
+
+
+
 using namespace std;
 
 #ifdef __cplusplus
 extern "C"
 #endif
+
+typedef enum {
+	HEART,
+	CONTROLLER,
+	HEART_RATE,
+	TV_REMOTE,
+	POKEMON,
+	NON
+} PICS;
 
 class Cursor {
 public:
@@ -46,16 +59,17 @@ public:
 	uint16_t y1_;
 	uint16_t width_;
 	uint16_t height_;
-	uint32_t** btmp_;
+	PICS btmp_;
 
-	Widget(const uint16_t, const uint16_t, const uint16_t width, const uint16_t height);
+	Widget(const uint16_t x1, const uint16_t y1, const uint16_t width, const uint16_t height, const PICS btmp);
 	Widget(const Widget &copy);
 	Widget & operator=(const Widget &rhs) {
 		if(this != &rhs) {
+			/*
 			for(uint16_t i = 0; i < width_; i++) {
 				free(btmp_[i]);
 			}
-			free(btmp_);
+			free(btmp_);*/
 			btmp_ = rhs.btmp_;
 			x1_ = rhs.x1_;
 			y1_ = rhs.y1_;
@@ -64,26 +78,25 @@ public:
 		}
 		return *this;
 	}
+	void onCreate(void);
 	void onClick(void);
 	void draw(void);
 	void clear(uint32_t backcolor);
 	void onDestroy(void);
 };
 
-
-
 class Activity {
 public:
 	uint32_t back_color_;
 	uint32_t** bitmap_;
-	uint32_t** allocator_;
+	int** allocator_;
 
 	Activity* pre_;
-	vector<Widget> widgets;
+	vector<Widget*> widgets;
 	map<Widget*, int> index_map;
 
 	Activity(Activity*);
-	bool addWidget(Widget);
+	bool addWidget(Widget*);
 	void OnDestroy(void);
 	void SetBackColor(uint32_t);
 private:
@@ -94,9 +107,8 @@ private:
 class UI {
 public:
 	static UI* instance() {
-		if(!instance_) {
-			instance_ = new UI;
-		}
+		if(!instance_) instance_ = new UI();
+
 		return instance_;
 	}
 	Activity* getCurUI(void) {
@@ -111,7 +123,6 @@ private:
 	}
 };
 
-
 class BackArrow : public Widget {
 public:
 	Activity *pre_;
@@ -120,7 +131,18 @@ public:
 	void onClick(void);
 };
 
+class HeartDemo : public Widget {
+public:
+	HeartDemo(const uint16_t, const uint16_t);
+};
 
+class MainActivity : public Activity {
+	friend class Activity;
+public:
+	void onCreate(void);
+	MainActivity(void);
+	bool addWidget(Widget*);
+};
 
 typedef struct trackPadState {
 	bool up;
@@ -143,6 +165,7 @@ void trackpad_Config(void);
 void get_track_pad_state(void);
 void Gesture_demo(Cursor&);
 void LCD_Texture_config(void);
+uint32_t getBitFromPic(PICS pic, int x, int y);
 
 UI* UI::instance_ = 0;
 
