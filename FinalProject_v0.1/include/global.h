@@ -13,6 +13,9 @@
 #include "stm32f7xx_hal_gpio.h"
 #include "stm32f769i_discovery.h"
 #include "stm32f769i_discovery_lcd.h"
+#include "stm32f769i_discovery_sd.h"
+#include "stm32f7xx_ll_sdmmc.h"
+#include "stm32f769i_discovery_qspi.h"
 #include "stm32f769i_discovery_ts.h"
 #include "stm32f7xx_it.h"
 
@@ -31,9 +34,22 @@ typedef enum {
 	CONTROLLER,
 	HEART_RATE,
 	TV_REMOTE,
+	TV_VOLUME,
+	TV_CHANNEL,
+	TV_SOURCE,
+	TV_POWER,
 	POKEMON,
+	BACK_BOTTON,
 	NON
 } PICS;
+
+typedef enum {
+	MAIN_MENU,
+	TV_CONTROL_MENU,
+	HEART_RATE_MENU,
+	GAME_DEMO_MENU,
+	CONTROL_DEMO_MENU
+} UI_State;
 
 class Cursor {
 public:
@@ -85,11 +101,45 @@ public:
 	void onDestroy(void);
 };
 
+#define CHUNK_SIZE			(512 * 800 * 2 * 4)
+#define VFRAM_SIZE			4
+#define NUM_OF_BLOCK 		0x1000000
+#define BLOCK_START_ADDR	0
+#define BLOCK_CLUSTER		1600
+#define TIMEOUT				0x00000008
+
+class MMU {
+public:
+	static MMU* instance() {
+		if(!instance_) instance_ = new MMU();
+		return instance_;
+	}
+	uint32_t memset(void* act) {
+		max_ += CHUNK_SIZE;
+		map_->insert(pair<void*, uint32_t>(act, max_));
+		index_->insert(pair<uint32_t, void*>(max_, act));
+		return max_;
+	}
+	uint32_t getBitMapIndex(void* act);
+	uint32_t getAllocatorIndex(void* act);
+	void removeAct(void* act);
+private:
+	uint32_t max_;
+	map<void*, uint32_t>* map_;
+	map<uint32_t, void*>* index_;
+	static MMU* instance_;
+	MMU(void) {
+		map_ = new map<void*, uint32_t>();
+		index_ = new map<uint32_t, void*>();
+		max_ = BLOCK_START_ADDR;
+	}
+};
+
 class Activity {
 public:
 	uint32_t back_color_;
-	uint32_t** bitmap_;
-	int** allocator_;
+	uint32_t bitmap_;
+	uint32_t allocator_;
 
 	Activity* pre_;
 	vector<Widget*> widgets;
@@ -97,6 +147,7 @@ public:
 
 	Activity(Activity*);
 	bool addWidget(Widget*);
+	void onCreate(void);
 	void OnDestroy(void);
 	void SetBackColor(uint32_t);
 private:
@@ -156,6 +207,13 @@ void SystemClock_Config(void);
 void Error_Handler(void);
 void CPU_CACHE_Enable(void);
 void system_init(void);
+void MPU_Config(void);
+
+void SD_init(SD_HandleTypeDef*);
+bool SD_isDetected(void);
+
+bool QSPI_Write(uint32_t*, uint32_t, uint32_t);
+bool QSPI_Read(uint32_t*, uint32_t, uint32_t);
 void LCD_Config(void);
 
 void GPIO_Config(void);
@@ -166,8 +224,18 @@ void get_track_pad_state(void);
 void Gesture_demo(Cursor&);
 void LCD_Texture_config(void);
 uint32_t getBitFromPic(PICS pic, int x, int y);
+uint16_t getXSizeFromPic(PICS pic);
+uint16_t getYSizeFromPic(PICS pic);
+void drawBitMap(PICS pic, uint16_t Xpos, uint16_t Ypos);
+void drawLayout(void);
+void touchScreenTest(void);
+void clickDefaultBackButton(uint16_t X, uint16_t Y);
+void drawDefaultBackButton(void);
+void drawBackButton(uint16_t X, uint16_t Y);
+
 
 UI* UI::instance_ = 0;
+MMU* MMU::instance_ = 0;
 
 TRACK_PAD_State track_pad_state;
 

@@ -2,7 +2,7 @@ system/src/BSP/stm32f769i_discovery.o: \
  ../system/src/BSP/stm32f769i_discovery.c \
  ../system/include/BSP/stm32f769i_discovery.h \
  ../system/include/stm32f7xx/stm32f7xx_hal.h \
- ../system/include/stm32f7xx/stm32f7xx_hal_conf_template.h \
+ ../system/include/stm32f7xx/stm32f7xx_hal_conf.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_def.h \
  ../system/include/cmsis/stm32f7xx.h \
@@ -85,7 +85,7 @@ system/src/BSP/stm32f769i_discovery.o: \
 
 ../system/include/stm32f7xx/stm32f7xx_hal.h:
 
-../system/include/stm32f7xx/stm32f7xx_hal_conf_template.h:
+../system/include/stm32f7xx/stm32f7xx_hal_conf.h:
 
 ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h:
 

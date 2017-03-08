@@ -1,7 +1,7 @@
 system/src/stm32f7xx/stm32f7xx_ll_fmc.o: \
  ../system/src/stm32f7xx/stm32f7xx_ll_fmc.c \
  ../system/include/stm32f7xx/stm32f7xx_hal.h \
- ../system/include/stm32f7xx/stm32f7xx_hal_conf_template.h \
+ ../system/include/stm32f7xx/stm32f7xx_hal_conf.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_def.h \
  ../system/include/cmsis/stm32f7xx.h \
@@ -80,7 +80,7 @@ system/src/stm32f7xx/stm32f7xx_ll_fmc.o: \
 
 ../system/include/stm32f7xx/stm32f7xx_hal.h:
 
-../system/include/stm32f7xx/stm32f7xx_hal_conf_template.h:
+../system/include/stm32f7xx/stm32f7xx_hal_conf.h:
 
 ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h:
 

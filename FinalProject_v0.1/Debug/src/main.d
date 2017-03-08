@@ -1,6 +1,6 @@
 src/main.o: ../src/main.cpp ../include/global.h \
  ../system/include/stm32f7xx/stm32f7xx_hal.h \
- ../system/include/stm32f7xx/stm32f7xx_hal_conf_template.h \
+ ../system/include/stm32f7xx/stm32f7xx_hal_conf.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_def.h \
  ../system/include/cmsis/stm32f7xx.h \
@@ -93,20 +93,29 @@ src/main.o: ../src/main.cpp ../include/global.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_dma2d.h \
  ../system/include/stm32f7xx/stm32f7xx_hal_ltdc.h \
  ../system/include/BSP/../../../Utilities/Fonts/fonts.h \
+ ../system/include/BSP/stm32f769i_discovery_sd.h \
+ ../system/include/cmsis/stm32f769xx.h \
+ ../system/include/stm32f7xx/stm32f7xx_hal_sd.h \
+ ../system/include/stm32f7xx/stm32f7xx_ll_sdmmc.h \
+ ../system/include/BSP/stm32f769i_discovery_qspi.h \
+ ../system/include/BSP/../Components/mx25l512/mx25l512.h \
+ ../system/include/stm32f7xx/stm32f7xx_hal_qspi.h \
  ../system/include/BSP/stm32f769i_discovery_ts.h \
  ../system/include/BSP/stm32f769i_discovery_lcd.h \
- ../system/include/cmsis/stm32f769xx.h \
  ../system/include/BSP/../Components/ft6x06/ft6x06.h \
  ../system/include/BSP/../Components/ft6x06/../Common/ts.h \
  ../include/stm32f7xx_it.h ../include/icon.h ../include/heart.h \
  ../include/controller_icon.h ../include/heart_rate_icon.h \
- ../include/pokemon_icon.h ../include/tv_remote_icon.h
+ ../include/pokemon_icon.h ../include/tv_remote_icon.h \
+ ../include/tv_volume_icon.h ../include/tv_channel_icon.h \
+ ../include/tv_source_icon.h ../include/tv_power_icon.h \
+ ../include/backButton_icon.h
 
 ../include/global.h:
 
 ../system/include/stm32f7xx/stm32f7xx_hal.h:
 
-../system/include/stm32f7xx/stm32f7xx_hal_conf_template.h:
+../system/include/stm32f7xx/stm32f7xx_hal_conf.h:
 
 ../system/include/stm32f7xx/stm32f7xx_hal_rcc.h:
 
@@ -294,11 +303,23 @@ src/main.o: ../src/main.cpp ../include/global.h \
 
 ../system/include/BSP/../../../Utilities/Fonts/fonts.h:
 
+../system/include/BSP/stm32f769i_discovery_sd.h:
+
+../system/include/cmsis/stm32f769xx.h:
+
+../system/include/stm32f7xx/stm32f7xx_hal_sd.h:
+
+../system/include/stm32f7xx/stm32f7xx_ll_sdmmc.h:
+
+../system/include/BSP/stm32f769i_discovery_qspi.h:
+
+../system/include/BSP/../Components/mx25l512/mx25l512.h:
+
+../system/include/stm32f7xx/stm32f7xx_hal_qspi.h:
+
 ../system/include/BSP/stm32f769i_discovery_ts.h:
 
 ../system/include/BSP/stm32f769i_discovery_lcd.h:
-
-../system/include/cmsis/stm32f769xx.h:
 
 ../system/include/BSP/../Components/ft6x06/ft6x06.h:
 
@@ -317,3 +338,13 @@ src/main.o: ../src/main.cpp ../include/global.h \
 ../include/pokemon_icon.h:
 
 ../include/tv_remote_icon.h:
+
+../include/tv_volume_icon.h:
+
+../include/tv_channel_icon.h:
+
+../include/tv_source_icon.h:
+
+../include/tv_power_icon.h:
+
+../include/backButton_icon.h:

@@ -367,6 +367,8 @@ __weak void BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
+  // Edited
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   
   /* Common GPIO configuration */
   gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
@@ -377,6 +379,10 @@ __weak void BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params)
   gpio_init_structure.Alternate = GPIO_AF10_SDMMC2;  
   gpio_init_structure.Pin = GPIO_PIN_3 | GPIO_PIN_4;
   HAL_GPIO_Init(GPIOB, &gpio_init_structure);
+
+  // GPIOC configuration
+  gpio_init_structure.Pin = GPIO_PIN_6 | GPIO_PIN_7;
+  HAL_GPIO_Init(GPIOC, &gpio_init_structure);
 
   /* GPIOD configuration */
   gpio_init_structure.Alternate = GPIO_AF11_SDMMC2;  
