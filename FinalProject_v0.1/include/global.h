@@ -20,6 +20,7 @@
 #include "stm32f7xx_it.h"
 
 #include "icon.h"
+#include "main.h"
 
 
 
@@ -28,6 +29,7 @@ using namespace std;
 #ifdef __cplusplus
 extern "C"
 #endif
+
 
 typedef enum {
 	HEART,
@@ -40,8 +42,38 @@ typedef enum {
 	TV_POWER,
 	POKEMON,
 	BACK_BOTTON,
+	PIKACHU_B,
+	PIKACHU_F,
+	BULBASAUR_B,
+	BULBASAUR_F,
+	CHARMANDER_B,
+	CHARMANDER_F,
+	EEVEE_B,
+	EEVEE_F,
+	SQUIRTLE_B,
+	SQUIRTLE_F,
+	ZUBAT_B,
+	ZUBAT_F,
+	BPM,
+	HEART_ICON,
+	HEART_RATE_LOGO,
+	POKE_BALL,
 	NON
 } PICS;
+
+
+typedef enum {
+	Pikachu,
+	Squirtle,
+	Charmander,
+	Bulbasaur,
+	Evee,
+	Zubat,
+	NON_P
+} Pokemon;
+
+
+
 
 typedef enum {
 	MAIN_MENU,
@@ -50,6 +82,19 @@ typedef enum {
 	GAME_DEMO_MENU,
 	CONTROL_DEMO_MENU
 } UI_State;
+
+
+typedef enum {
+	Up,
+	Down,
+	Left,
+	Right,
+	Up_Right,
+	Up_Left,
+	Down_Right,
+	Down_Left,
+	Center
+} JS_State;
 
 class Cursor {
 public:
@@ -69,37 +114,6 @@ private:
 	Cursor &operator=(const Cursor &rhs);
 };
 
-class Widget {
-public:
-	uint16_t x1_;
-	uint16_t y1_;
-	uint16_t width_;
-	uint16_t height_;
-	PICS btmp_;
-
-	Widget(const uint16_t x1, const uint16_t y1, const uint16_t width, const uint16_t height, const PICS btmp);
-	Widget(const Widget &copy);
-	Widget & operator=(const Widget &rhs) {
-		if(this != &rhs) {
-			/*
-			for(uint16_t i = 0; i < width_; i++) {
-				free(btmp_[i]);
-			}
-			free(btmp_);*/
-			btmp_ = rhs.btmp_;
-			x1_ = rhs.x1_;
-			y1_ = rhs.y1_;
-			width_ = rhs.width_;
-			height_ = rhs.height_;
-		}
-		return *this;
-	}
-	void onCreate(void);
-	void onClick(void);
-	void draw(void);
-	void clear(uint32_t backcolor);
-	void onDestroy(void);
-};
 
 #define CHUNK_SIZE			(512 * 800 * 2 * 4)
 #define VFRAM_SIZE			4
@@ -107,93 +121,6 @@ public:
 #define BLOCK_START_ADDR	0
 #define BLOCK_CLUSTER		1600
 #define TIMEOUT				0x00000008
-
-class MMU {
-public:
-	static MMU* instance() {
-		if(!instance_) instance_ = new MMU();
-		return instance_;
-	}
-	uint32_t memset(void* act) {
-		max_ += CHUNK_SIZE;
-		map_->insert(pair<void*, uint32_t>(act, max_));
-		index_->insert(pair<uint32_t, void*>(max_, act));
-		return max_;
-	}
-	uint32_t getBitMapIndex(void* act);
-	uint32_t getAllocatorIndex(void* act);
-	void removeAct(void* act);
-private:
-	uint32_t max_;
-	map<void*, uint32_t>* map_;
-	map<uint32_t, void*>* index_;
-	static MMU* instance_;
-	MMU(void) {
-		map_ = new map<void*, uint32_t>();
-		index_ = new map<uint32_t, void*>();
-		max_ = BLOCK_START_ADDR;
-	}
-};
-
-class Activity {
-public:
-	uint32_t back_color_;
-	uint32_t bitmap_;
-	uint32_t allocator_;
-
-	Activity* pre_;
-	vector<Widget*> widgets;
-	map<Widget*, int> index_map;
-
-	Activity(Activity*);
-	bool addWidget(Widget*);
-	void onCreate(void);
-	void OnDestroy(void);
-	void SetBackColor(uint32_t);
-private:
-	Activity(const Activity &copy);
-	Activity &operator=(const Activity &rhs);
-};
-
-class UI {
-public:
-	static UI* instance() {
-		if(!instance_) instance_ = new UI();
-
-		return instance_;
-	}
-	Activity* getCurUI(void) {
-		return this->curUI_;
-	}
-	void setCurUI(Activity* next);
-private:
-	Activity* curUI_;
-	static UI* instance_;
-	UI(void) {
-		curUI_ = NULL;
-	}
-};
-
-class BackArrow : public Widget {
-public:
-	Activity *pre_;
-	Activity *cur_;
-	BackArrow(Activity*, Activity*);
-	void onClick(void);
-};
-
-class HeartDemo : public Widget {
-public:
-	HeartDemo(const uint16_t, const uint16_t);
-};
-
-class MainActivity : public Activity {
-	friend class Activity;
-public:
-	void onCreate(void);
-	MainActivity(void);
-	bool addWidget(Widget*);
-};
 
 typedef struct trackPadState {
 	bool up;
@@ -219,6 +146,10 @@ void LCD_Config(void);
 void GPIO_Config(void);
 void GPIO_init(GPIO_TypeDef*, GPIO_InitTypeDef*, uint32_t);
 
+void UART_Config(void);
+void PB_Config(void);
+void ADC_Config(void);
+
 void trackpad_Config(void);
 void get_track_pad_state(void);
 void Gesture_demo(Cursor&);
@@ -226,16 +157,21 @@ void LCD_Texture_config(void);
 uint32_t getBitFromPic(PICS pic, int x, int y);
 uint16_t getXSizeFromPic(PICS pic);
 uint16_t getYSizeFromPic(PICS pic);
+
 void drawBitMap(PICS pic, uint16_t Xpos, uint16_t Ypos);
 void drawLayout(void);
 void touchScreenTest(void);
 void clickDefaultBackButton(uint16_t X, uint16_t Y);
 void drawDefaultBackButton(void);
 void drawBackButton(uint16_t X, uint16_t Y);
+void restore_dir(JS_State jss);
+void mark_dir(JS_State jss);
 
 
-UI* UI::instance_ = 0;
-MMU* MMU::instance_ = 0;
+
+#define PLAYER_1 0
+#define PLAYER_2 1
+#define START_GAME 0
 
 TRACK_PAD_State track_pad_state;
 
@@ -254,5 +190,43 @@ GPIO_InitTypeDef d4_init;
 
 #define RADIUS		10
 #define BACK_COLOR	LCD_COLOR_WHITE
+
+JS_State dir[3][3] = {
+		{Down_Left, Down, Down_Right},
+		{Left, Center, Right},
+		{Up_Left, Up, Up_Right}
+};
+
+#define PLR_MP_FRM_X	418
+#define PLR_MP_FRM_Y	297
+#define PLR_MP_CTT_X	(PLR_MP_FRM_X + 1)
+#define PLR_MP_CTT_Y	(PLR_MP_FRM_Y + 1)
+#define PLR_HP_FRM_X	418
+#define PLR_HP_FRM_Y	275
+#define PLR_HP_CTT_X	(PLR_HP_FRM_X + 1)
+#define PLR_HP_CTT_Y	(PLR_HP_FRM_Y + 1)
+#define ENM_HP_FRM_X	18
+#define ENM_HP_FRM_Y	18
+#define ENM_HP_CTT_X	(ENM_HP_FRM_X + 1)
+#define ENM_HP_CTT_Y	(ENM_HP_FRM_Y + 1)
+#define HP_FRM_WIDTH	362
+#define HP_BAR_WIDTH	(HP_FRM_WIDTH - 2)
+#define HP_FRM_HEIGHT	22
+#define HP_BAR_HEIGHT	(HP_FRM_HEIGHT - 2)
+#define MP_FRM_WIDTH	HP_FRM_WIDTH
+#define MP_BAR_WIDTH	HP_BAR_WIDTH
+#define MP_FRM_HEIGHT	HP_FRM_HEIGHT
+#define MP_BAR_HEIGHT	HP_BAR_HEIGHT
+
+#define BALL_SIZE		20
+#define PLR_BALL_Y		(PLR_HP_FRM_Y - BALL_SIZE - 10)
+#define PLR_BALL_X1		(PLR_HP_FRM_X + 34)
+#define PLR_BALL_X2		(PLR_BALL_X1 + 53)
+#define PLR_BALL_X3		(PLR_BALL_X2 + 53)
+
+#define ENM_BALL_Y		(ENM_HP_FRM_Y + HP_FRM_HEIGHT + 10)
+#define ENM_BALL_X1		(ENM_HP_FRM_X + 34)
+#define ENM_BALL_X2		(ENM_BALL_X1 + 53)
+#define ENM_BALL_X3		(ENM_BALL_X2 + 53)
 
 #endif

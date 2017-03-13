@@ -53,7 +53,9 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/ 
-extern SD_HandleTypeDef uSdHandle;
+extern UART_HandleTypeDef UartHandle;
+extern ADC_HandleTypeDef    VERT;
+extern ADC_HandleTypeDef    HORZ;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -174,9 +176,21 @@ void EXTI15_10_IRQHandler(void) {
 	if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_13) != RESET)
 	{
 	    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+	} else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_12) != RESET) {
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12);
 	}
 }
 
+
+void EXTI9_5_IRQHandler(void) {
+	if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_8) != RESET)
+	{
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
+	} else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_9) != RESET)
+	{
+		HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);
+	}
+}
 
 /**
   * @brief  This function handles DMA2 Stream 0 interrupt request.
@@ -185,28 +199,55 @@ void EXTI15_10_IRQHandler(void) {
   */
 void DMA2_Stream0_IRQHandler(void)
 {
-    HAL_DMA_IRQHandler(uSdHandle.hdmarx);
+    //HAL_DMA_IRQHandler(VERT.DMA_Handle);
+    //HAL_DMA_IRQHandler(HORZ.DMA_Handle);
+}
+
+
+
+/**
+  * @brief  This function handles DMA interrupt request.
+  * @param  None
+  * @retval None
+  * @Note   This function is redefined in "main.h" and related to DMA
+  *         used for USART data transmission
+  */
+void USARTx_DMA_RX_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(UartHandle.hdmarx);
 }
 
 /**
-  * @brief  This function handles DMA2 Stream 5 interrupt request.
+  * @brief  This function handles DMA interrupt request.
   * @param  None
   * @retval None
+  * @Note   This function is redefined in "main.h" and related to DMA
+  *         used for USART data reception
   */
-void DMA2_Stream5_IRQHandler(void)
+void USARTx_DMA_TX_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(uSdHandle.hdmatx);
+  HAL_DMA_IRQHandler(UartHandle.hdmatx);
 }
 
+
 /**
-  * @brief  This function handles SDMMC2 interrupt request.
+  * @brief  This function handles UART interrupt request.
   * @param  None
   * @retval None
+  * @Note   This function is redefined in "main.h" and related to DMA
+  *         used for USART data transmission
   */
-void BSP_SDMMC_IRQHandler(void)
+void USARTx_IRQHandler(void)
 {
-  HAL_SD_IRQHandler(&uSdHandle);
+  HAL_UART_IRQHandler(&UartHandle);
 }
+
+void ADC_IRQHandler()
+{
+	HAL_ADC_IRQHandler(&VERT);
+	HAL_ADC_IRQHandler(&HORZ);
+}
+
 /**
   * @}
   */

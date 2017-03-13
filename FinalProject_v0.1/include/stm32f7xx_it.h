@@ -64,6 +64,11 @@ void DMA2_Stream0_IRQHandler(void);
 void DMA2_Stream5_IRQHandler(void);
 void BSP_SDMMC_IRQHandler(void);
 
+void USARTx_DMA_RX_IRQHandler(void);
+void USARTx_DMA_TX_IRQHandler(void);
+void USARTx_IRQHandler(void);
+
+
 #ifdef __cplusplus
 }
 #endif

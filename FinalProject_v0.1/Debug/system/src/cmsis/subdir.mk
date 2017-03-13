@@ -7,14 +7,14 @@ C_SRCS += \
 ../system/src/cmsis/system_stm32f7xx.c 
 
 S_UPPER_SRCS += \
-../system/src/cmsis/startup_stm32f746xx.S 
+../system/src/cmsis/startup_stm32f769xx.S 
 
 OBJS += \
-./system/src/cmsis/startup_stm32f746xx.o \
+./system/src/cmsis/startup_stm32f769xx.o \
 ./system/src/cmsis/system_stm32f7xx.o 
 
 S_UPPER_DEPS += \
-./system/src/cmsis/startup_stm32f746xx.d 
+./system/src/cmsis/startup_stm32f769xx.d 
 
 C_DEPS += \
 ./system/src/cmsis/system_stm32f7xx.d 
